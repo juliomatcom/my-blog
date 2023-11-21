@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+a {
+  color: yellowgreen;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+nav div {
+  margin-left: 10px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+#content {
+  max-width: 900px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}

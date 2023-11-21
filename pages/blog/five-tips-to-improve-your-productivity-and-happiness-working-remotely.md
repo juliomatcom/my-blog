@@ -1,0 +1,13 @@
+# 5 tips to improve your productivity and happiness working remotely
+
+I have worked full-time remotely since October 2021, and even before that I used to work at the office only once or twice a week. COVID-19 pandemic accelerated the transition to an even more distributed workforces in IT so at this point chances are very high that you will work remotely some day or with remote colleagues.  
+
+Remote work can be stressful and solitary sometimes but done right we can have a better work-life balance and boost our productivity, yes you can be more productive at home.
+
+- **Designate a workspace.** Create a comfortable and quiet space for yourself where you can work without noise and distractions. Don’t be cheap with your health, buy a nice desk (a standing desk preferably) and an ergonomic chair. Think about how many hours you are going to spend on it. Having a separate space at home for work will help your brain to disconnect after a long day, and the opposite in the morning.
+- **Setup matters.** When working from home you will need a better setup than in the office, there is no one around you so very often we have to fill that gap with video calls and productivity tools. Learn how to properly use all the tools available like calendars, jira, notion, etc. Have a good internet connection and microphone / headphones. Use as many monitors as you need. Make your in-office setup look rusty in comparison.
+- **Communication, communication and communication.** That’s it, working from home requires more skill and patience than when you are all in the same room. There will be connection issues, software issues, more interruptions, etc. Learning how to better communicate oral and written will make the whole team more efficient and avoid extra meetings. Prepare before meetings, make ppts or share your screen to better communicate deep topics and take notes when listening. Don’t forget to write and share documentation about everything that can be useful for others or your future self (yes don’t forget yourself).
+- **Respect routines and schedules.** With no other people around it can be surprisingly easy to forget when it is time to launch or to close the lid. Set alarms or reminders as necessary and get these valuables breaks on time. What’s the point in working remotely if you are overworking and not having a better balanced life ?
+- **Don’t be a lonely wolf.** Too often we forget that programming is a social activity, most of us will work in teams. As part of our daily tasks we can or should interact with other people. Try to make the most of every call, have some little chat with your colleagues before or after a meet, this can go a long way in making every one day a bit better and helps to build more trust in your team.
+
+03-18-2023
