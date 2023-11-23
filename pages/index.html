@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--meta_content-->
   <link rel="stylesheet" href="/main.css">
-  <title>My Website</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis">
+  <title><!--title--></title>
 </head>
 <body>
   <nav>
     <div><a href="/">Home</a></div>
-    <div><a href="/about">About</a></div>
-    <div><a href="/contact">Contact me</a></div>
+    <div><a href="https://www.linkedin.com/in/juliomartin-dev/" target="_blank">Resume</a></div>
+    <div><a id="contactMe" href="#">Contact me</a></div>
   </nav>
 
   <main>
@@ -21,7 +22,17 @@
   </main>
 
   <footer>
-    <p>&copy; 2023 Julio Cesar Martin. All rights reserved.</p>
+    <p></p>
   </footer>
+  <script>
+    function contactMe(e) {
+      const m = ['juliomatcom', '@', 'gmail.com']
+      window.open('mailto:' + m.join(''), '_blank')
+      e.preventDefault()
+    }
+    document.getElementById('contactMe').addEventListener('click', contactMe)
+    const footer = document.querySelector('footer p')
+    footer.innerHTML = `&copy; ${new Date().getFullYear()} Julio César Martín`
+  </script>
 </body>
 </html>

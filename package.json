@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "test": "standard",
+    "lint": "standard",
     "lint:fix": "standard --fix",
     "dev": "nodemon app.js"
   },
