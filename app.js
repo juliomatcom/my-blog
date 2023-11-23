@@ -32,7 +32,12 @@ app.get('/', (req, res) => {
 
   const html = layout
     .replace('<!--content-->', `
-      <div class="center"><img src="https://avatars.githubusercontent.com/u/8549955?v=4" alt="Avatar"/></div>
+      <div class="center">
+        <a title="Go to my GitHub page" href="https://github.com/juliomatcom" target="_blank">
+          <img src="/icons8-github-30a.png" alt="GitHub" class="github-icon"/>
+          <img src="https://avatars.githubusercontent.com/u/8549955?v=4" alt="Profile" class="avatar"/>
+        </a>
+      </div>
       <span class="typewriter">My blog</span>
       <ul>${postList}</ul>
     `)

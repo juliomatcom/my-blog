@@ -11,8 +11,8 @@
 <body>
   <nav>
     <div><a href="/">Home</a></div>
+    <div><a id="contactMe" href="#contact">Contact</a></div>
     <div><a href="https://www.linkedin.com/in/juliomartin-dev/" target="_blank">Resume</a></div>
-    <div><a id="contactMe" href="#">Contact me</a></div>
   </nav>
 
   <main>
@@ -24,15 +24,6 @@
   <footer>
     <p></p>
   </footer>
-  <script>
-    function contactMe(e) {
-      const m = ['juliomatcom', '@', 'gmail.com']
-      window.open('mailto:' + m.join(''), '_blank')
-      e.preventDefault()
-    }
-    document.getElementById('contactMe').addEventListener('click', contactMe)
-    const footer = document.querySelector('footer p')
-    footer.innerHTML = `&copy; ${new Date().getFullYear()} Julio César Martín`
-  </script>
+  <script src="/main.js"></script>
 </body>
 </html>
