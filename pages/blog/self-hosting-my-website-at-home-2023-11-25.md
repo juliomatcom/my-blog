@@ -7,11 +7,11 @@ This website alongside many others services is hosted in the mini pc you see in 
 It was a long journey to get here, in this post I will try to explain the hardware and main software involved. Let's start answering some basic questions:
 
 ### Why self host ?
-Because is fun, since I was a kid I always was looking for servers to host in my local network for me and my friends. This is how I get into Computer Science in the first place. Nowadays I use to surf the [r/selfhosted](https://www.reddit.com/r/selfhosted/) and youtube for inspiration.
-Self-hosting is also an excelent way to learn new things and most important to me, you get to know how things work in the systems infrastructure and network layer which is not in my daily tasks.
+Because is fun, since I was a kid I was always looking for services to host in my local network for me and my friends. This is how I get into Computer Science in the first place. Nowadays I use to surf the [r/selfhosted](https://www.reddit.com/r/selfhosted/) and youtube for inspiration.
+Self-hosting is also an excelent way to learn new things often hidden by cloud providers and you get to know how things work in the system infrastructure and network layer.
 
 ### Why a mini PC ?
-Because power consumption is very low, I wanted something reliable but at the same time I don't want to spend a lot of money in electricity, this will run 24x7. I also like it small and silent. My plan is to run everything in containers and be as efficient as possible.
+Because power consumption is very low (around 15W). I wanted something reliable but at the same time I don't want to spend more money in electricity, this server will run 24x7. I also like it small, portable and silent. My plan is to be as cloud-independent and efficient as possible.
 
 ### Why Ubuntu server ?
 Because is probably the most popular Linux distribution, is very well documented and supported. This is a hobby, I don't want to be stuck for days with some issue not well documented online.  
@@ -26,7 +26,7 @@ It was important to me to use the server distro without GUI, I wanted to learn m
 - Mini PC plus 16GB RAM Kingston 3200mhz (removed the original 8gb) ~ &euro; 195.
 - Eaton 3S UPS 700 DIN: &euro; 121 -This is not necessary but I wanted to protect the hardware from any power surge or outage since I'm running some important services like [Home Assistant](https://www.home-assistant.io/).
 - Ethernet cables CAT 8 ~ &euro; 6,50 each.
-- The domain name ~ &euro; 7 per year.
+- A domain name ~ &euro; 7 per year.
 
 I have my ISP router connected directly via ethernet cable only with the Mikrotik on the internet port. The Mikrotik is automatically configured to use the ISP router as gateway and is my only DHCP server. The mini PC is connected to the Mikrotik via ethernet cable. For WiFi I use Nest WiFi from Google connected to the Mikrotik via ethernet cable too, this is not necessary but I wanted to have a better WiFi coverage in my house.
 
