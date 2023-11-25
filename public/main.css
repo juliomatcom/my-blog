@@ -1,6 +1,6 @@
 body {
   background-color: black;
-  color: white;
+  color: whitesmoke;
   font-family: 'Dosis', serif;
   font-size: 1.2rem;
   line-height: 1.3;
@@ -49,6 +49,16 @@ main {
 #blog img {
   margin: 0px auto;
   display: block;
+}
+
+#blog pre code {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background-color: #1e1e1e;
+  color: whitesmoke;
+  border-radius: 0.5em;
+  font-size: 0.8em;
 }
 
 footer {
