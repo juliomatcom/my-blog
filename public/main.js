@@ -10,7 +10,7 @@ function contactMe (e) {
 
 function addFooter () {
   const footer = document.querySelector('footer p')
-  footer.innerHTML = `With ❤️ by Julio César Martín - ${new Date().getFullYear()}`
+  footer.innerHTML = `With 💚 by Julio César Martín - ${new Date().getFullYear()}`
 }
 
 function selectActiveMeny () {
