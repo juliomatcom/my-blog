@@ -91,7 +91,7 @@ It's very important to version control your configuration files and backup your 
 - I backup configuration files to external drives or google drive.
 
 ## Security
-This something that I'm still learning and improving. I will write more about this topic in the future.  
+This is something that I'm still learning and I know it can be improved more, I will write more about this topic when I get more experience.  
 For now please make sure that you are NOT exposing your services to the internet without any security measures.
 
 ## Monitoring and alerts
