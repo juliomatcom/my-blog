@@ -62,7 +62,7 @@ We need to take some steps to be able to access our services from the internet.
 
 ### Setup a domain name
 I bought a domain name from namecheap.com, you can buy a domain name from any provider you want.
-Next I setup the `DNS records` to point to my public IP address. This way I can access my servics using the domain name instead of the public IP address.
+Next I setup the `DNS records` to point to my public IP address. This way I can access my services using the domain name instead of the public IP address.
 Note: Make sure that your public IP address is static, if not you will need to use a dynamic DNS service also.
 
 ### Nginx reverse proxy
@@ -104,3 +104,8 @@ I use the following tools to monitor my services:
 - [Dozzle](https://dozzle.dev/) to monitor the logs of my containers.
 - I check the status of my services in the [Home Assistant](https://www.home-assistant.io/) dashboard.
 - [betterstack.com](https://betterstack.com/) Uptime monitor for my websites. (FREE tier available)
+
+
+## Closing thoughts
+As you see there are a lot of things to consider when hosting your own services but it's very fun and rewarding.  
+I hope you enjoyed this blog post, if you have any questions or suggestions please let me know.
