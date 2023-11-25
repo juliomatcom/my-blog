@@ -6,20 +6,17 @@ import renderBlog from './application/blog.js'
 import { getBlogFileSync, getPosts } from './infrastructure/blogRepository.js'
 import { getLayoutSync } from './infrastructure/pageRepository.js'
 
+const PORT = 3080
 const app = express()
-const port = 3080
 
 app.use(express.static('public'))
 
-const layout =   getLayoutSync()
-const posts = getPosts()
+const layout = getLayoutSync()
+const postFiles = getPosts()
 
 app.get('/', (req, res) => {
-  const postList = posts.map(
-    post => `<li><a href="/blog/${post}">${getPostTitleFromDisk(post)}</a></li>`
-  ).join('')
-
-  const html = renderHome({ layout, postList })
+  const posts = postFiles.map(post => ({ title: getPostTitleFromDisk(post), link: `/blog/${post}` }))
+  const html = renderHome({ layout, posts })
   res.send(html)
 })
 
@@ -30,10 +27,9 @@ app.get('/blog/:id', (req, res) => {
   res.send(html)
 })
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`)
 })
-
 
 function getPostTitleFromDisk (filename) {
   return getPostTitle(getBlogFileSync(filename))

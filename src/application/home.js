@@ -1,4 +1,9 @@
-function render ({ layout, postList }) {
+function render ({ layout, posts }) {
+  const postList = posts
+    .map(
+      ({ title, link }) => `<li><a title="Read:${title}" href="${link}">${title}</a></li>`
+    ).join('')
+
   const html = layout
     .replace('<!--content-->', `
     <div class="center">
@@ -10,7 +15,8 @@ function render ({ layout, postList }) {
     <span class="typewriter">My blog</span>
     <ul>${postList}</ul>
   `)
-    .replace('<!--title-->', 'Julio Cesar Martin')
+    .replace('<!--title-->', 'Julio Cesar Martin - Software Engineer')
+    .replace('<!--meta_content-->', '<meta name="description" content="Julio Cesar Martin - Software Engineer">')
   return html
 }
 
