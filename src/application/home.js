@@ -1,4 +1,4 @@
-function render (req, res, { layout, postList }) {
+function render ({ layout, postList }) {
   const html = layout
     .replace('<!--content-->', `
     <div class="center">
@@ -11,7 +11,7 @@ function render (req, res, { layout, postList }) {
     <ul>${postList}</ul>
   `)
     .replace('<!--title-->', 'Julio Cesar Martin')
-  res.send(html)
+  return html
 }
 
 export default render
