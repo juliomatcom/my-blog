@@ -4,7 +4,7 @@
 
 This website alongside many others services is hosted in the mini pc you see in the picture above, an Intel Alder Lake Ν95 12th Gen (up to 3,4 GHz) with 16GB DDR4 running Ubuntu server 22.04.3 LTS.
 
-It was a long journey to get here, in this post I will try to explain how you can do it yourself. Let's start answering some basic questions:
+It was a long journey to get here but after many blogs, tutorials, and github issues I finally managed to get everything working. I want to share my experience and hopefully inspire you to do the same. Let's start by answering the basic questions:
 
 ### Why self host ?
 Because is fun, since I was a kid I was always looking for services to host in my local network for me and my friends, this is how I get into Computer Science in the first place.
@@ -21,7 +21,7 @@ It was important to me to use the server distro without GUI, I wanted to learn m
 
 ## Diving into the hardware
 
-### The costs *(september 2023)*
+### Hardware and costs *(september 2023)*
 - Router Mikrotik Hex RB750Gr3 5 ports 1gb: &euro; 62.
 - Orange Router Livebox 6: &euro; 0 (provided by my ISP).
 - Mini PC plus 16GB RAM Kingston 3200mhz (removed the original 8gb) ~ &euro; 195.
