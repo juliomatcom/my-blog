@@ -85,10 +85,10 @@ Now I can access the service running in the port 3080 in the mini PC without exp
 ### Adding HTTPS to the websites
 It's highly recommended to use HTTPS in your websites, this way the traffic is encrypted and secure. I use [certbot](https://certbot.eff.org/) for this. It's very easy to setup and it's free.
 
-## Backups
+## Backup & data
 It's very important to version control your configuration files and backup your data. I use the following tools to backup my data:
 - I have my `docker-compose` and other scripts in a private repository in github.com.
-- I backup configuration files to external drives or google drive.
+- I backup other configuration files to external drives or google drive.
 
 ## Security
 This is something that I'm still learning and I know it can be improved more, I will write more about this topic when I get more experience.  
@@ -99,8 +99,8 @@ Hosting your own services is fun but you need to make sure that everything is wo
 I use the following tools to monitor my services:
 - [GoAccess](https://goaccess.io/) to monitor the traffic in my websites. 
 - [Dozzle](https://dozzle.dev/) to monitor the logs of my containers.
-- I check the status of my services and hardware in may [Home Assistant](https://www.home-assistant.io/) dashboard.
-- [betterstack.com](https://betterstack.com/) Uptime monitor for my websites. (FREE tier available)
+- I check the status of my services and hardware in the [Home Assistant](https://www.home-assistant.io/) dashboard.
+- [betterstack.com](https://betterstack.com/) for Uptime monitor of my websites. (FREE tier available)
 
 
 ## Closing thoughts
