@@ -40,34 +40,31 @@ I want all the traffic and firewall rules to be managed by the Mikrotik, so I ha
 I want to keep this blog simple so I won't go into the details, but I will explain the basic configuration I did in the Mikrotik.
 - Assign static IPs to all the devices in my network: This way I can easily manage the firewall rules. You can do this in the DHCP server configuration.  
 - Redirecting selected traffic to the Mini PC: You can use [dst-nat](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/NAT) to redirect internet traffic to your server. For example, I want all the traffic from the port 80/443 to be redirected to my mini PC. This way I can host some websites in the mini PC and access it from the internet. You can do this in the IP > Firewall > NAT tab in the Mikrotik.
-- Firewall rules: I want to block all the traffic from the internet to my local network except the traffic I want to allow. You can do this in the IP > Firewall > Filter Rules tab in the Mikrotik.
+- Firewall rules: I want to block all the traffic from the internet to my local network except the traffic I want to allow. You can also do this in the IP > Firewall in the Mikrotik.
 
 ## Runing services in the mini PC
-I wanted to run all my services in containers, this way I can easily manage them and keep the host OS clean.
+I wanted to run all my services in [containers](https://www.docker.com/resources/what-container/), this way I can easily manage them and keep the host OS clean.
 If one day everything goes wrong I can reinstall the host OS and "easily" restore the containers with `docker-compose`.
 
 ### Docker
-
-I use [docker](https://www.docker.com/get-started/) to run all my services in containers.
-Currently I only have one `docker-compose.yml` file for all my services including:
-- Home Assistant
-- Nginx
-- Jellyfin
-- GoAccess
-- Dozzle
+I run all my services with [Docker](https://www.docker.com/get-started/) and I only use one `docker-compose.yml` file. Some of the services I run are:
+- Home Assistant: for home automation
+- Jellyfin: for media streaming
+- GoAccess: for web analytics
+- Dozzle: for docker logs
 
 ## Accessing services from internet
-All my services are running in containers in the mini PC, this services (ports) are not exposed outside my local network because the server is only allowed to receive public traffic in ports 80/443.
-We need to take some steps to be able to access our services from the internet.
+All my services are running in containers inside the mini PC, this services (ports) are not exposed outside my local network because the server is only allowed to receive public traffic in ports 80/443.
+We need to take some steps to be able to access our services from the internet:
 
 ### Setup a domain name
-I bought a domain name from namecheap.com, you can buy a domain name from any provider you want.
-Next I setup the `DNS records` to point to my public IP address. This way I can access my services using the domain name instead of the public IP address.
-Note: Make sure that your public IP address is static, if not you will need to use a dynamic DNS service also.
+I bought my domain names from namecheap.com but you can buy a domain name from any provider you want.  
+Next I setup the `DNS records` to point to my [public IP address](https://whatismyipaddress.com/), this way I can access my services using the domain name instead of an IP.  
+Note: Make sure that your public IP address is static, if not you will need to use a [dynamic DNS](https://www.cloudflare.com/learning/dns/glossary/dynamic-dns/) service also.
 
 ### Nginx reverse proxy
 [Nginx reverse proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/) allows you to forward requests to/from services, it's very well documented and easy to use.
-I use it to redirect the public traffic to the proper container in the host using the domain provided.  
+I use it to redirect the public traffic to the right container in the host using the domain provided.  
 For example, for the domain `proderror.eu` I could use the following configuration in my Nginx server:
 ```
 server {
@@ -83,10 +80,10 @@ server {
                ...
         }
 ```
-This way I can access the service running in the port 3080 in the mini PC without exposing the port to the internet.
+Now I can access the service running in the port 3080 in the mini PC without exposing the port to the internet.
 
-### Adding HTTPS to your websites
-I use [certbot](https://certbot.eff.org/) to add https to my websites. It's very easy to use and it's free.
+### Adding HTTPS to the websites
+It's highly recommended to use HTTPS in your websites, this way the traffic is encrypted and secure. I use [certbot](https://certbot.eff.org/) for this. It's very easy to setup and it's free.
 
 ## Backups
 It's very important to version control your configuration files and backup your data. I use the following tools to backup my data:
@@ -102,10 +99,10 @@ Hosting your own services is fun but you need to make sure that everything is wo
 I use the following tools to monitor my services:
 - [GoAccess](https://goaccess.io/) to monitor the traffic in my websites. 
 - [Dozzle](https://dozzle.dev/) to monitor the logs of my containers.
-- I check the status of my services in the [Home Assistant](https://www.home-assistant.io/) dashboard.
+- I check the status of my services and hardware in may [Home Assistant](https://www.home-assistant.io/) dashboard.
 - [betterstack.com](https://betterstack.com/) Uptime monitor for my websites. (FREE tier available)
 
 
 ## Closing thoughts
-As you see there are a lot of things to consider when hosting your own services but it's very fun and rewarding.  
+As you see there are a lot of things to consider when hosting your own services but it can be a lot of fun and you will learn a lot in the process.  
 I hope you enjoyed this blog post, if you have any questions or suggestions please let me know.

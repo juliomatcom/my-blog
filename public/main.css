@@ -24,22 +24,21 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding-top: 1rem;
 }
 
 nav div {
   margin-right: 25px;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-}
-
 #content {
   max-width: 900px;
+  margin: 0px auto;
+  padding: 1rem;
+}
+
+#blog h1 {
+  text-align: center;
 }
 
 #blog ul li {
@@ -51,12 +50,17 @@ main {
   display: block;
 }
 
+#blog code {
+  background-color: #1e1e1e;
+  font-size: 0.8em;
+  padding: 0.2em;
+}
+
 #blog pre code {
   display: block;
   overflow-x: auto;
   padding: 1em;
   background-color: #1e1e1e;
-  color: whitesmoke;
   border-radius: 0.5em;
   font-size: 0.8em;
 }
