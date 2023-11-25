@@ -2,13 +2,13 @@
   "name": "my-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/server.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "dev": "nodemon app.js"
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",

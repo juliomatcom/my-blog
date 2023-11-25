@@ -10,4 +10,3 @@ Remote work can be stressful and solitary sometimes but done right we can have a
 - **Respect routines and schedules.** With no other people around it can be surprisingly easy to forget when it is time to launch or to close the lid. Set alarms or reminders as necessary and get these valuables breaks on time. What’s the point in working remotely if you are overworking and not having a better balanced life ?
 - **Don’t be a lonely wolf.** Too often we forget that programming is a social activity, most of us will work in teams. As part of our daily tasks we can or should interact with other people. Try to make the most of every call, have some little chat with your colleagues before or after a meet, this can go a long way in making every one day a bit better and helps to build more trust in your team.
 
-03-18-2023

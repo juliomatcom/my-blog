@@ -42,6 +42,14 @@ main {
   max-width: 900px;
 }
 
+#blog ul li {
+  margin-bottom: 10px;
+}
+
+#blog p:has(img) {
+  text-align: center;
+}
+
 footer {
   display: flex;
   justify-content: center;
