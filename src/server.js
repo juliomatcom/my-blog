@@ -21,10 +21,15 @@ app.get('/', (req, res) => {
 })
 
 app.get('/blog/:id', (req, res) => {
-  const { id } = req.params
-  const post = getBlogFileSync(id)
-  const html = renderBlog({ layout, post })
-  res.send(html)
+  try {
+    const { id } = req.params
+    const post = getBlogFileSync(id)
+    const html = renderBlog({ layout, post })
+    res.send(html)
+  } catch (error) {
+    console.warn('Error found returning 404')
+    res.status(404).send('Not found. Go back to <a href="/">home</a>!')
+  }
 })
 
 app.listen(PORT, () => {
@@ -32,5 +37,6 @@ app.listen(PORT, () => {
 })
 
 function getPostTitleFromDisk (filename) {
-  return getPostTitle(getBlogFileSync(filename))
+  const blogStr = getBlogFileSync(filename)
+  return getPostTitle(blogStr)
 }

@@ -6,10 +6,16 @@ const dirname = path.dirname(new URL(import.meta.url).pathname)
 const blogCache = {}
 
 function getBlogFileSync (filename) {
-  const filePath = path.join(dirname, `../../pages/blog/${filename}`)
-  const blogStr = blogCache[filename] || fs.readFileSync(filePath, 'utf8')
-  blogCache[filename] = blogStr
-  return blogStr
+  try {
+    // TODO: improve to only read files we know exists
+    const filePath = path.join(dirname, `../../pages/blog/${filename}`)
+    const blogStr = blogCache[filename] || fs.readFileSync(filePath, 'utf8')
+    blogCache[filename] = blogStr
+    return blogStr
+  } catch (error) {
+    console.warn(`Error reading ${filename} file`, error)
+    throw error
+  }
 }
 
 function getPosts () {
