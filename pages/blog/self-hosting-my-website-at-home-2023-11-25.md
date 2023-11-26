@@ -8,7 +8,7 @@ It was a long journey to get here but after many blogs, tutorials, and github is
 
 ### Why self host ?
 Because is fun, since I was a kid I was always looking for services to host in my local network for me and my friends, this is how I get into Computer Science in the first place.
-Self-hosting is an excelent way to learn new things often hidden by layers in cloud providers and you'll get to know more about how things work in the system infrastructure and the network layer.
+Self-hosting is an excelent way to learn new things often hidden by layers in cloud providers, it forces you to dig more about how things work in the system infrastructure and the network layer.
 
 ### Why a mini PC ?
 Because power consumption is very low (around 15-20W peak). I wanted something reliable but at the same time I don't want to spend more money in electricity, this server will run 24x7. I also like it small, portable and silent. My plan is to be as cloud-independent and efficient as possible.
@@ -37,13 +37,15 @@ I setup my domain to point to my static public IP address via DNS, then all this
 I bought one by one all the hardware from Amazon but don't let the cost scare you, I'm sure you can find better deals if you look for second hand hardware or in other marketplaces, all you need to start is a PC.
 
 ## Configuring the routers
-I want all the traffic and firewall rules to be managed by the Mikrotik, so I have to configure the ISP router to be in bridge mode. This is not possible with the Orange Router Livebox 6, so I have to configure it to be in DMZ mode. This way all the traffic is forwarded to the Mikrotik and the Orange Router Livebox 6 is not doing any firewall or NAT.
+
+### ISP Router
+I want all the traffic and firewall rules to be managed by the Mikrotik, so I have to configure the ISP router to be in bridge mode, this is not possible with the Orange Router Livebox 6, so I have to configure it to be in DMZ mode. This way all the traffic is forwarded to the Mikrotik and the ISP Router is not doing any Firewall or NAT. No other devices are connected to the ISP Router, I only use it as a fiber modem. Wifi is handled by a Nest Wifi router connected to the Mikrotik in bridge mode.
 
 ### Basic configuration in the Mikrotik
 I want to keep this blog simple so I won't go into the details, but I will explain the basic configuration I did in the Mikrotik.
-- Assign static IPs to all the devices in my network: This way I can easily manage the firewall rules. You can do this in the DHCP server configuration.  
-- Redirecting selected traffic to the Mini PC: You can use [dst-nat](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/NAT) to redirect internet traffic to your server. For example, I want all the traffic from the port 80/443 to be redirected to my mini PC. This way I can host some websites in the mini PC and access it from the internet. You can do this in the IP > Firewall > NAT tab in the Mikrotik.
-- Firewall rules: I want to block all the traffic from the internet to my local network except the traffic I want to allow. You can also do this in the IP > Firewall in the Mikrotik.
+- Assign static IPs to all the devices in my network: This way I can easily manage the firewall rules. You can do this in the IP > DHCP Server configuration in the WebFig.
+- Redirecting selected traffic to the Mini PC: You can use [dst-nat](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/NAT) to redirect internet traffic to your server. For example, I want all the traffic from the port 80/443 to be redirected to my mini PC. This way I can host some websites in the mini PC and access it from the internet. You can do this in the IP > Firewall > NAT tab in the WebFig.
+- Firewall rules: I want to block all the traffic from the internet to my local network except the traffic I want to allow. You can also do this in the IP > Firewall > Ports or Rules in the WebFig.
 
 ## Runing services in the mini PC
 I wanted to run all my services in [containers](https://www.docker.com/resources/what-container/), this way I can easily manage them and keep the host OS clean.
@@ -92,11 +94,11 @@ It's highly recommended to use HTTPS in your websites, this way the traffic is e
 
 ## Security
 This is something that I'm still learning and I know it can be improved more, but I will share some tips that I have learned so far:  
-- You are not exposing your local network devices.
-- You have setup a Firewall beetwen your local network and the internet.
-- You close all the ports that you are not using.
-- You are not using default passwords in your services and devices.
-- You are using secure connection (HTTPS) in your websites.
+- Do not expose your local network devices.
+- Setup a Firewall beetwen your local network and the internet.
+- Close all the ports that you are not using.
+- Make sure you are not using default passwords in your services and devices.
+- Use secure connection (HTTPS) in your websites.
 
 There are other security measures that you can take depending on your infrastructure but for my use case I think this is a good start.  
 
