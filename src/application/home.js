@@ -13,7 +13,7 @@ function render ({ layout, posts }) {
       </a>
     </div>
     <span class="typewriter">My blog</span>
-    <ul>${postList}</ul>
+    <ul class="posts">${postList}</ul>
   `)
     .replace('<!--title-->', 'Julio Cesar Martin - Software Engineer')
     .replace('<!--meta_content-->', '<meta name="description" content="Julio Cesar Martin - Software Engineer">')
