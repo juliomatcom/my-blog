@@ -1,5 +1,5 @@
 import express from 'express'
-import fs from 'node:fs'
+import helmet from 'helmet'
 import { getPostTitle } from './application/helpers/post.js'
 import renderHome from './application/home.js'
 import renderBlog from './application/blog.js'
@@ -9,6 +9,16 @@ import { getLayoutSync } from './infrastructure/pageRepository.js'
 const PORT = 3080
 const app = express()
 
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'img-src': ["'self'", 'avatars.githubusercontent.com'],
+        'font-src': ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com']
+      }
+    }
+  })
+)
 app.use(express.static('public'))
 
 const layout = getLayoutSync()
