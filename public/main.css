@@ -60,6 +60,7 @@ ul.posts li {
 #blog img {
   margin: 0px auto;
   display: block;
+  max-width: 100%;
 }
 
 #blog code {
@@ -82,6 +83,7 @@ footer {
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  padding-top: 2rem;
 }
 
 .center {

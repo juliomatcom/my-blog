@@ -8,8 +8,7 @@ It was a long journey to get here but after many blogs, tutorials, and github is
 
 ### Why self host ?
 Because is fun, since I was a kid I was always looking for services to host in my local network for me and my friends, this is how I get into Computer Science in the first place.
-Self-hosting is an excelent way to learn new things often hidden by layers in cloud providers and you get to know how things work in the system infrastructure and network layer.
-You can surf the [r/selfhosted](https://www.reddit.com/r/selfhosted/) or youtube for more inspiration.
+Self-hosting is an excelent way to learn new things often hidden by layers in cloud providers and you'll get to know more about how things work in the system infrastructure and the network layer.
 
 ### Why a mini PC ?
 Because power consumption is very low (around 15-20W peak). I wanted something reliable but at the same time I don't want to spend more money in electricity, this server will run 24x7. I also like it small, portable and silent. My plan is to be as cloud-independent and efficient as possible.
@@ -19,23 +18,23 @@ Because is probably the most popular Linux distribution, is very well documented
 It was important to me to use the server distro without GUI, I wanted to learn more and feel confortable with the command line.
 
 ## The network architecture
-This is my current setup, is very simple and I'm sure there are better ways to do it but for now is enough for me. I will explain the basic configurations needed to get everything working bellow.
+The next image shows my current setup, is very simple but effective.  
 
 ![](/red.drawio.png)
 
-## Diving into the hardware
+I setup my domain to point to my static public IP address via DNS, then all this traffic is redirected to the Mikrotik router where I have configured some firewall rules to redirect the right traffic to the mini PC where all my services are running in containers. We will see more details about this in the next sections.
+
+## The hardware
 
 ### Hardware and costs *(september 2023)*
 - Router Mikrotik Hex RB750Gr3 5 ports 1gb: &euro; 62.
 - Orange Router Livebox 6: &euro; 0 (provided by my ISP).
-- Mini PC plus 16GB RAM Kingston 3200mhz (removed the original 8gb) ~ &euro; 195.
+- Ace Magician Mini PC plus 16GB RAM Kingston 3200mhz (removed the original 8gb) ~ &euro; 195.
 - Eaton 3S UPS 700 DIN: &euro; 121 -This is not necessary but I wanted to protect the hardware from any power surge or outage since I'm running some important services like [Home Assistant](https://www.home-assistant.io/).
 - Ethernet cables CAT 8 ~ &euro; 6,50 each.
 - A domain name ~ &euro; 7 per year.
 
-I have my ISP router connected directly via ethernet cable only with the Mikrotik on the internet port. The Mikrotik is automatically configured to use the ISP router as gateway and is my only DHCP server. The mini PC is connected to the Mikrotik via ethernet cable. For WiFi I use Nest WiFi from Google connected to the Mikrotik via ethernet cable too, this is not necessary but I wanted to have a better WiFi coverage in my house.
-
-<!-- Add picture -->
+I bought one by one all the hardware from Amazon but don't let the cost scare you, I'm sure you can find better deals if you look for second hand hardware or in other marketplaces, all you need to start is a PC.
 
 ## Configuring the routers
 I want all the traffic and firewall rules to be managed by the Mikrotik, so I have to configure the ISP router to be in bridge mode. This is not possible with the Orange Router Livebox 6, so I have to configure it to be in DMZ mode. This way all the traffic is forwarded to the Mikrotik and the Orange Router Livebox 6 is not doing any firewall or NAT.
@@ -57,8 +56,10 @@ I run all my services with [Docker](https://www.docker.com/get-started/) and I o
 - GoAccess: for web analytics
 - Dozzle: for docker logs
 
-## Accessing services from internet
-All my services are running in containers inside the mini PC, this services (ports) are not exposed outside my local network because the server is only allowed to receive public traffic in ports 80/443.
+There are literally thousands of services you can run at home, you can check [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted) for more inspiration.
+
+## Accessing the services from internet
+All these services (ports) are not exposed outside my local network because the server is protected by the Mikrotik firewall and is only allowed to receive internet traffic in ports 80/443.
 We need to take some steps to be able to access our services from the internet:
 
 ### Setup a domain name
@@ -89,14 +90,15 @@ Now I can access the service running in the port 3080 in the mini PC without exp
 ### Adding HTTPS to the websites
 It's highly recommended to use HTTPS in your websites, this way the traffic is encrypted and secure. I use [certbot](https://certbot.eff.org/) for this. It's very easy to setup and it's free.
 
-## Backup & data
-It's very important to version control your configuration files and backup your data. I use the following tools to backup my data:
-- I have my `docker-compose` and other scripts in a private repository in github.com.
-- I backup other configuration files to external drives or google drive.
-
 ## Security
-This is something that I'm still learning and I know it can be improved more, I will write more about this topic when I get more experience.  
-For now please make sure that you are NOT exposing your services to the internet without any security measures.
+This is something that I'm still learning and I know it can be improved more, but I will share some tips that I have learned so far:  
+- You are not exposing your local network devices.
+- You have setup a Firewall beetwen your local network and the internet.
+- You close all the ports that you are not using.
+- You are not using default passwords in your services and devices.
+- You are using secure connection (HTTPS) in your websites.
+
+There are other security measures that you can take depending on your infrastructure but for my use case I think this is a good start.  
 
 ## Monitoring and alerts
 Hosting your own services is fun but you need to make sure that everything is working as expected year around.
@@ -104,9 +106,13 @@ I use the following tools to monitor my services:
 - [GoAccess](https://goaccess.io/) to monitor the traffic in my websites. 
 - [Dozzle](https://dozzle.dev/) to monitor the logs of my containers.
 - I check the status of my services and hardware in the [Home Assistant](https://www.home-assistant.io/) dashboard.
-- [betterstack.com](https://betterstack.com/) for Uptime monitor of my websites. (FREE tier available)
+- [betterstack.com](https://betterstack.com/) for Uptime monitor of my websites. (a FREE tier is available)
 
+## Backup & data
+It's very important to version control your configuration files and backup your data. I use the following tools to backup my data:
+- I have my `docker-compose` and other scripts in a private repository in github.com.
+- I backup other configuration files to external drives or google drive.
 
 ## Closing thoughts
-As you see there are a lot of things to consider when hosting your own services but it can be a lot of fun and you will learn a lot in the process.  
-I hope you enjoyed this blog post, if you have any questions or suggestions please let me know.
+As you see there are a lot of things to consider when hosting your own services but it can be a lot of fun and you will learn a lot in the process, I know I did and I'm still learning.  
+I hope you enjoyed this blog post, if you found it useful or you have any suggestion please [let me know](https://twitter.com/depre_cuba).
