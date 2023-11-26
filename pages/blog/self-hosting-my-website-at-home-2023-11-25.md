@@ -18,6 +18,10 @@ Because power consumption is very low (around 15-20W peak). I wanted something r
 Because is probably the most popular Linux distribution, is very well documented and supported. This is a hobby, I don't want to be stuck for days with some issue not well documented online.  
 It was important to me to use the server distro without GUI, I wanted to learn more and feel confortable with the command line.
 
+## The network architecture
+This is my current setup, is very simple and I'm sure there are better ways to do it but for now is enough for me. I will explain the basic configurations needed to get everything working bellow.
+
+![](/red.drawio.png)
 
 ## Diving into the hardware
 
