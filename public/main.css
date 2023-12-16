@@ -45,6 +45,15 @@ nav div {
   padding-top: 4rem;
 }
 
+#rss {
+  max-width: 900px;
+  margin: 0px auto;
+  padding: 0.5rem;
+}
+
+#rss img {
+  max-width: 70px;
+}
 ul.posts li {
   padding-bottom: 5px;
 }
