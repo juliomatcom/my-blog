@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { getPostDate } from '../application/helpers/post.js'
 
 const dirname = path.dirname(new URL(import.meta.url).pathname)
 
@@ -28,17 +29,6 @@ function getPosts () {
       const dateBlog2 = getPostDate(blog2)
       return dateBlog2 - dateBlog1
     })
-}
-
-function getPostDate (filename) {
-  try {
-    // format: YYYY-MM-DD
-    const matchDate = /(\d{4}-\d{2}-\d{2})/
-    return new Date(filename.match(matchDate)[0].replace('.md', ''))
-  } catch (error) {
-    console.warn(`Error getting date from ${filename}`, error)
-    return null
-  }
 }
 
 export {
