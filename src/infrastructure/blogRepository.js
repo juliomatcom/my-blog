@@ -31,9 +31,14 @@ function getPosts () {
 }
 
 function getPostDate (filename) {
-  // format: YYYY-MM-DD
-  const matchDate = /(\d{4}-\d{2}-\d{2})/
-  return new Date(filename.match(matchDate)[0].replace('.md', ''))
+  try {
+    // format: YYYY-MM-DD
+    const matchDate = /(\d{4}-\d{2}-\d{2})/
+    return new Date(filename.match(matchDate)[0].replace('.md', ''))
+  } catch (error) {
+    console.warn(`Error getting date from ${filename}`, error)
+    return null
+  }
 }
 
 export {
