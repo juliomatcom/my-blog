@@ -1,6 +1,6 @@
 # Self hosting my website at home
 
-![](/Optimized-homelab.jpg)
+![](/images/Optimized-homelab.jpg)
 
 This website alongside many others services is hosted in the mini pc you see in the picture above, an Intel Alder Lake Ν95 12th Gen (up to 3,4 GHz) with 16GB DDR4 running Ubuntu server 22.04.3 LTS.
 
@@ -20,7 +20,7 @@ It was important to me to use the server distro without GUI, I wanted to learn m
 ## The network architecture
 The next image shows my current setup, is very simple but effective.  
 
-![](/red.drawio.png)
+![](/images/red.drawio.png)
 
 I setup my domain to point to my static public IP address via DNS, then all this traffic is redirected to the Mikrotik router where I have configured some firewall rules to redirect the right traffic to the mini PC where all my services are running in containers. We will see more details about this in the next sections.
 

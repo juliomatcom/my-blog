@@ -8,7 +8,7 @@ function render ({ layout, posts }) {
     .replace('<!--content-->', `
     <div class="center">
       <a title="Go to my GitHub page" href="https://github.com/juliomatcom" target="_blank">
-        <img src="/icons8-github-30a.png" alt="GitHub" class="github-icon"/>
+        <img src="/images/icons8-github-30a.png" alt="GitHub" class="github-icon"/>
         <img src="https://avatars.githubusercontent.com/u/8549955?v=4" alt="Profile" class="avatar"/>
       </a>
     </div>
