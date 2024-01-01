@@ -1,11 +1,8 @@
 # Documentation is king in software
-I made this *joke* on my linkedin today  
+![](/images/craiyon_complexity.png)
+A software mess *-Image generated using craiyon.com*
 
-[![](/images/screenshot-www.linkedin.com-2024.01.01-16_31_23.png)](https://www.linkedin.com/posts/activity-7147610026449272834-hi4o?utm_source=share&utm_medium=member_desktop)
-
-*Click on image to see the post on linkedin.*
-
-But joke aside, I do believe this is the truth. **Documentation is king in software**. Our mission is to be efficient problem solvers, and documentation (I'm including declarative code here) is the main factor that makes us efficient.
+I do believe this is the truth, documentation is the king in software. Our mission is to be efficient problem solvers, and documentation (I'm including declarative code here) is the main factor that makes us efficient.
 
 ## The pain
 Imagine you are new at a company or team. You are given a task to fix what product said "should be a simple fix in that system". You have no idea where to start. Obviously you ask your colleagues for help, but surprise (not really), no one knows the system. So what do you do ? Look for documentation, there is none, never was, now you are stuck, you are frustrated because you need to read half of the codebase just to run "the system" in local and debug. You are not productive, you are not happy. Well this is a real scenario, I've been there, I know the pain.
@@ -13,11 +10,11 @@ Imagine you are new at a company or team. You are given a task to fix what produ
 ## What if there was documentation ?
 Now imagine that you ask your colleagues for help, they don't know the system, Chris was the maintainer and he left the company before you came but wait, they point you to some documentation he left in Confluence (of course). You read the documentation, you understand how to run the system and after a while you fix the bug, you are happy, product is happy.
 
-## Light at the end of the tunnel
 Now, this is just the fun side, you get to enjoy others well made docs, but what about you ?  
 Are you documenting that new endpoint upgrade ? Is documented that new feature flow ? Is that nasty bug that keep reappearing documented ? Yes, is easier said than done but documentation should evolve with the codebase / logic, every corner case, every architecture change or nasty bug should be documented somewhere, helping not only your colleagues but the future you and making the team more efficient.  
 
-Start small and build from there, you don't need to document everything at once, but you should start somewhere. I will share some tips that I found useful over the years:
+## Light at the end of the tunnel
+Start small and build from there, you don't need to document everything at once or in one day, but you should start somewhere. I will share some tips that I have found very useful over the years:
 
 - An image worth more than a thousand words, **use diagrams to explain complex flows** instead of paragraphs. Keep the cognitive load low.
 - Create a **wiki**, use Confluence or any other tool to document your systems, the how tos, etc. Have a central place to look for documentation.
