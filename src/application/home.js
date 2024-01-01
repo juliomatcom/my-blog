@@ -11,6 +11,9 @@ function render ({ layout, posts }) {
         <img src="/images/icons8-github-30a.png" alt="GitHub" class="github-icon"/>
         <img src="https://avatars.githubusercontent.com/u/8549955?v=4" alt="Profile" class="avatar"/>
       </a>
+      <p>
+        <code>Full-Stack Dev | DDD & Microservices Enthusiast | Homelab Explorer 🚀</code>
+      </p>
     </div>
     <span class="typewriter">My blog</span>
     <ul class="posts">${postList}</ul>

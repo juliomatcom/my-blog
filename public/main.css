@@ -73,7 +73,7 @@ ul.posts li {
   max-width: 100%;
 }
 
-#blog code {
+code {
   background-color: #1e1e1e;
   font-size: 0.8em;
   padding: 0.2em;
