@@ -29,6 +29,12 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+  deployment:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.2
       with:
@@ -36,4 +42,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: docker-compose restart my-blog
+        script: cd ~/homelab/my-blog && git pull && docker-compose restart my-blog
+        
