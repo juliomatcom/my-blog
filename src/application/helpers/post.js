@@ -5,7 +5,7 @@ function getPostTitle (str) {
 // try to get the first paragraph of the post
 function getPostDescription (str) {
   try {
-    const firtParagraphEndRegex = /[\.]+[\s]/g
+    const firtParagraphEndRegex = /[.]+[\s]/g
     const end = str.search(firtParagraphEndRegex)
     const start = str.slice(0, end).trim().lastIndexOf('\n')
     return str.slice(start, end) + '...'
