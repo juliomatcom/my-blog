@@ -35,14 +35,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-    - name: Tailscale
+    - name: Tailscale VPN
       uses: tailscale/github-action@v2
       with:
         oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
         tags: tag:ci
         version: 1.48.2
-    - name: executing remote ssh commands using password
+    - name: executing remote ssh commands
       uses: appleboy/ssh-action@v1.0.2
       with:
         host: ${{ secrets.HOST }}
