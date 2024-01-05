@@ -47,6 +47,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        #script: cd ~/homelab/my-blog && git pull && docker-compose restart my-blog
-        script: whoami
+        script: cd ~/homelab/my-blog && git pull && docker-compose restart my-blog
         
