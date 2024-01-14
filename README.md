@@ -23,4 +23,4 @@
 ```
 
 ## Deployment
-Automatically handled with tailscale VPN and private ssh to ace server
+Automatically handled with tailscale VPN and private ssh to ace server 
