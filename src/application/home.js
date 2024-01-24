@@ -12,7 +12,7 @@ function render ({ layout, posts }) {
         <img src="https://avatars.githubusercontent.com/u/8549955?v=4" alt="Profile" class="avatar"/>
       </a>
       <p>
-        <code>Full-Stack Dev | DDD & Microservices Enthusiast | Homelab Explorer 🚀</code>
+        <code>Software Engineer | DDD & Microservices Enthusiast | Homelab Explorer 🚀</code>
       </p>
     </div>
     <span class="typewriter">My blog</span>
