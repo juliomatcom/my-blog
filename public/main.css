@@ -134,10 +134,10 @@ img.avatar {
 
 .starry {
   background-image:
-  radial-gradient(	#fff8e4, rgba(255,255,255,.2) 2px, transparent 40px),
-  radial-gradient(	#ff9050, rgba(255,255,255,.15) 1px, transparent 30px),
-  radial-gradient(	#ffd250, rgba(255,255,255,.1) 2px, transparent 40px),
-  radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+  radial-gradient(	#fff8e4, rgba(105, 188, 243, 0.2) 2px, transparent 30px),
+  radial-gradient(	#ff9050, rgba(255,255,255,.1) 2px 1px, transparent 10px),
+  radial-gradient(	#fde499, rgba(255,255,255,.1) 2px, transparent 40px),
+  radial-gradient(#fff8e4, rgba(255,255,255,.1) 2px, transparent 15px);
   background-size: 750px 750px, 550px 550px, 250px 250px, 250px 250px;
   background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
