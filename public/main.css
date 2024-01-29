@@ -43,7 +43,7 @@ nav div {
   margin: 0px auto;
   padding: 0.5rem;
   padding-top: 4rem;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.5);
 }
 
 #rss {
@@ -135,10 +135,11 @@ img.avatar {
 
 .starry {
   background-image:
-  radial-gradient(	#fff8e4, rgba(105, 188, 243, 0.2) 2px, transparent 30px),
+  radial-gradient(	#c0e5fd, rgba(105, 188, 243, 0.2) 3px, transparent 20px),
   radial-gradient(	#ff9050, rgba(255, 150, 150, 0.5) 2px 1px, transparent 10px),
-  radial-gradient(	#fde499, rgba(255,255,255,.1) 2px, transparent 40px),
-  radial-gradient(#4e493d, rgba(255,255,255,.1) 2px, transparent 15px);
-  background-size: 575px 490px, 667px 667px, 250px 250px, 237px 237px;
-  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  radial-gradient(	#fff8e4, rgba(255, 248, 228,.1) 2px, transparent 10px),
+  radial-gradient(#4e493d, rgba(255,255,255,.1) 2px, transparent 15px),
+  radial-gradient(#faf1d6, rgba(250, 245, 228, 0) 1px, transparent 10px);
+  background-size: 575px 490px, 667px 667px, 250px 250px, 237px 237px, 100px 100px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 120px 150px;
 }
