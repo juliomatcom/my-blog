@@ -9,6 +9,16 @@ body {
   letter-spacing: 0.7px;
   min-width: 375px;
 }
+::-moz-selection {
+  /* Code for Firefox */
+  color: pink;
+  background: ##252525;
+}
+
+::selection {
+  color: pink;
+  background: #252525;
+}
 
 a {
   color: yellowgreen;
@@ -76,17 +86,17 @@ ul.posts li {
 
 code {
   background-color: #1e1e1e;
-  font-size: 0.8em;
+  font-size: 0.7em;
   padding: 0.2em;
 }
 
 #blog pre code {
+  font-family: "Fira Code", monospace;
   display: block;
   overflow-x: auto;
   padding: 1em;
   background-color: #1e1e1e;
   border-radius: 0.5em;
-  font-size: 0.8em;
 }
 
 footer {
