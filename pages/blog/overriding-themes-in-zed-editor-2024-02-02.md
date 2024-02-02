@@ -93,7 +93,8 @@ You can also create a new theme instead of overriding an existing one. Themes ar
 ## Still a long way to go
 These are the main issues I found so far:
 - No addons or extensions market yet, this makes cool things like Minimap not available yet.
-- Themes, File tree icons, UI are not very polished.
+- Some parts of the UI needs polishing, like the file tree.
 - Lack of documentation
+- Financing is not very clear yet, we'll see how this goes.
 
-Now that the project is open source it should starting to move faster.Still even in the current state is working great for me and I hope this tweaks make you consider Zed Editor now.
+Now that the project is open source it should move faster. Still even in the current state is working great for me and I hope this tweaks make you consider Zed Editor now.
