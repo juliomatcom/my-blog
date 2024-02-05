@@ -82,11 +82,11 @@ I bring my own theme from VSCode and overrided the "Ayu Dark" theme in Zed Edito
   }
 }
 ``` 
-Update: get the last version from [here](https://gist.github.com/juliomatcom/fc40bab53cb01fb3286b054ebd55e5ff).
+Update: get the last version from [here](https://gist.github.com/juliomatcom/fc40bab53cb01fb3286b054ebd55e5ff).  
 You can save and see the changes in real-time.  
 
 - There is also a [theme importer](https://zed.dev/blog/user-themes-now-in-preview) available in work right now, so you can import your full VSCode theme.
-- I extracted from [here](https://github.com/PyaeSoneAungRgn/github-zed-theme/blob/main/github-theme.json) the options I needed to change, I'll update this post when Zed website have better documentation about this.
+- Options available for the theme are defined [here](https://github.com/zed-industries/zed/blob/998f6cf80d3de4c289869edfa20e847605465776/crates/theme/src/schema.rs#L55), syntax is [here](https://github.com/zed-industries/zed/tree/998f6cf80d3de4c289869edfa20e847605465776/crates/theme/src/styles), before I extracted them from this [theme](https://github.com/PyaeSoneAungRgn/github-zed-theme/blob/main/github-theme.json), is not very well documented yet.
 
 ## Adding a new theme
 You can also create a new theme instead of overriding an existing one. Themes are stored in the `themes/` subdirectory under the Zed config: `~/.config/zed/themes`. Please follow the official [post](preview) to see how to create a new theme.
