@@ -11,7 +11,7 @@ this presentation.
 - There are many terms and concepts that are not well defined or defined at all
 - We are having communication issues between teams and even inside the teams
 - Lack of documentation and understanding of the systems, even in the new ones
-- Increasingly large codebase
+- Increasingly large and complex codebase
 
 We want to address these issues and improve the full development cycle, from the business requirements to the code.
 
