@@ -75,7 +75,7 @@ different approaches to implement it
 - Talk about where to start and how to migrate the current codebases iteratively
 
 Is important to mention that this is not a silver bullet, but a proposal to improve the current state of our systems and
-there could be some projects that are not a good fit for this architecture or the migration could be too expensive.
+there could be some projects that are not a good fit for this architecture or the migration doesn't worth the effort.
 
 I will write more about this in the future, for now I hope this inspires you to start the conversation in your own team.
 
