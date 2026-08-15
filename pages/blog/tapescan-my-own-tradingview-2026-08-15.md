@@ -73,3 +73,17 @@ I am already trading these setups with real money. The useful part is not a magi
 
 ## What may come
 I still have to decide if I want this public, or open source. For now it is just for me, and for a few friends who care about the market. That is enough. If I open it later, it will be because the tool is already useful, not because I need an audience to finish it.
+
+
+## Some app features in action
+
+Single stock with setup chart
+![](/images/chart.png)
+
+Risk and position sizing
+![](/images/sizer.png)
+
+Algorithms
+![](/images/algorithms.png)
+
+If you like this post, don't forget to say hi.
