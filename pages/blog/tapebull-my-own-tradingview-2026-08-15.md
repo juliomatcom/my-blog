@@ -3,7 +3,7 @@
 
 ![](/images/setups.png)
 
-Over the last month, on my free time, I built [TapeBull]([https://github.com/juliomatcom/tapescan](https://tapebull.com/)), a self-hosted scanner for the U.S. stock market. I used frontier models like Claude Opus and GPT 5.6 to plan, then implemented many of the tasks with lighter models too. Spec-driven development made that practical: at plan time each task already has a model assigned by complexity. Spend the expensive reasoning where the design is hard, keep the rest cheap. The product is still mine: the rules, the algorithms, and the way I actually look at the tape.
+Over the last month, on my free time, I built [TapeBull](https://tapebull.com/), a self-hosted scanner for the U.S. stock market. I used frontier models like Claude Opus and GPT 5.6 to plan, then implemented many of the tasks with lighter models too. Spec-driven development made that practical: at plan time each task already has a model assigned by complexity. Spend the expensive reasoning where the design is hard, keep the rest cheap. The product is still mine: the rules, the algorithms, and the way I actually look at the tape.
 
 This is not a TradingView clone and it does not try to be. It is a daily end-of-day system that ingests the whole U.S. equity universe, runs my own setups overnight, and shows me only the names that match.
 
