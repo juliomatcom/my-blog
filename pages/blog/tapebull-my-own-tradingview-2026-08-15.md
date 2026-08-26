@@ -87,3 +87,5 @@ Algorithms
 ![](/images/algorithms.png)
 
 If you like this post, don't forget to say hi.
+
+Updated: 08-26-2026
