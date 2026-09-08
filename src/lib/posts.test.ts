@@ -33,6 +33,12 @@ describe('post metadata helpers', () => {
     );
     expect(getPostImage('# Title\n\nno images here')).toBeNull();
   });
+
+  it('prefers an explicit <!-- description: ... --> over the heuristic', () => {
+    const md =
+      '# Title\n\n<!-- description: Hand-written SEO snippet. -->\n\nFirst sentence. More.';
+    expect(getPostDescription(md)).toBe('Hand-written SEO snippet.');
+  });
 });
 
 describe('blog content directory', () => {

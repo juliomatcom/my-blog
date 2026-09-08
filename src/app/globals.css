@@ -221,8 +221,25 @@ img.avatar {
   margin-bottom: 20px;
 }
 
+header .intro {
+  max-width: 60ch;
+  margin: 1rem auto 0;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.center h1,
+header h1 {
+  font-size: 1.6rem;
+  margin: 0.2rem 0 0;
+}
+
 /* Source: https://css-tricks.com/snippets/css/typewriter-effect/ */
 .typewriter {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 1.2rem 0 0.6rem;
   padding-right: 2px;
   border-right: 0.15em solid whitesmoke; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
