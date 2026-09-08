@@ -1,8 +1,8 @@
 /* Spaceship-window space background -- framework-agnostic Three.js scene.
  *
  * A deep cloud of real 3D star particles streaming past a fixed camera, plus
- * procedurally-shaded alien planets, a spiral galaxy, a lenticular galaxy, a
- * nebula and a black hole. Pointer movement (or device tilt) slides and turns
+ * procedurally-shaded alien planets, a spiral galaxy, a lenticular galaxy, two
+ * nebulae and a black hole. Pointer movement (or device tilt) slides and turns
  * the camera a few degrees with eased inertia, so near stars sweep across the
  * view while far ones barely move -- the parallax of looking through a moving
  * ship's window.
@@ -1078,15 +1078,19 @@ function createInput() {
  * On a machine without WebGL it no-ops (the CSS `.starry` fallback stays).
  */
 export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
-  const readingMode = !!document.getElementById('blog');
+  // `#blog` marks a rendered post. Its presence is re-checked every frame (the
+  // scene mounts once and outlives client-side navigation), so `atPost()` also
+  // tracks moving between the home page and a post without a reload.
+  const atPost = () => !!document.getElementById('blog');
+  const readingMode = atPost();
 
   // Blog posts are for reading -- keep the field sparse and calm so a long
-  // scroll over the moving background doesn't get distracting.
+  // scroll over the moving background doesn't get distracting. Star density is
+  // fixed here at build time; the pointer parallax is toggled live in the frame
+  // loop so it fades out on a post and back in on the home page.
   if (readingMode) {
     CONFIG.starCount = 2600;
     CONFIG.drift = 0.1;
-    CONFIG.camShift = 0.7;
-    CONFIG.lookShift = 7;
   } else {
     CONFIG.starCount = 7500;
     CONFIG.drift = 0.2;
@@ -1216,7 +1220,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   farScene.add(lenticular.object);
 
   const nebula = buildNebula({
-    position: [-104, 15, -150],
+    position: [-82, 4, -150],
     radius: 19,
     gasCount: 6000,
     starCount: 75,
@@ -1232,6 +1236,25 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   });
   nebula.setPixelRatio(dpr);
   farScene.add(nebula.object);
+
+  // small blue bubble nebula floating above the orange planet (64, 28, -145)
+  const blueNebula = buildNebula({
+    position: [20, 34, -150],
+    radius: 8,
+    gasCount: 2600,
+    starCount: 22,
+    spin: 0.006,
+    tilt: -0.25,
+    pointSize: 260,
+    clumps: [
+      { color: '#3f7fe0', offset: [0, 0, 0], scale: [1.0, 0.95, 0.8], spread: 1.0, weight: 0.4 },
+      { color: '#6ba8ff', offset: [-3, 2, 1], scale: [0.9, 0.8, 0.7], spread: 0.8, weight: 0.28 },
+      { color: '#2a5fb0', offset: [3, -2, -1], scale: [0.8, 0.9, 0.7], spread: 0.9, weight: 0.2 },
+      { color: '#a9d0ff', offset: [1, 3, 1], scale: [0.5, 0.45, 0.4], spread: 0.45, weight: 0.12 },
+    ],
+  });
+  blueNebula.setPixelRatio(dpr);
+  farScene.add(blueNebula.object);
 
   // black hole down in the bottom-right (swapped with the spiral galaxy)
   const blackHole = buildBlackHole({
@@ -1265,6 +1288,8 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   meteorFields.forEach((f) => overlay.add(f.object));
 
   const input = createInput();
+  // 1 on the home page, eased to 0 on a post -- scales the whole pointer parallax.
+  let parallax = readingMode ? 0 : 1;
 
   function resize() {
     const w = canvas.clientWidth;
@@ -1286,16 +1311,25 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
 
+    // In a blog post the cursor is for reading -- selecting text, chasing a link --
+    // so swinging the whole window along with it is distracting. Ease the parallax
+    // out to nothing on a post (camera locked forward) and back in on the home page.
+    parallax += ((atPost() ? 0 : 1) - parallax) * (1 - Math.exp(-4 * dt));
     input.update(dt, t);
-    camera.position.x = input.view.x * CONFIG.camShift;
-    camera.position.y = -input.view.y * CONFIG.camShift;
-    camera.lookAt(input.view.x * CONFIG.lookShift, -input.view.y * CONFIG.lookShift, -100);
+    camera.position.x = input.view.x * CONFIG.camShift * parallax;
+    camera.position.y = -input.view.y * CONFIG.camShift * parallax;
+    camera.lookAt(
+      input.view.x * CONFIG.lookShift * parallax,
+      -input.view.y * CONFIG.lookShift * parallax,
+      -100,
+    );
 
     stars.update(dt, t);
     planets.forEach((p) => p.update(dt));
     galaxy.update(dt);
     lenticular.update(dt);
     nebula.update(dt);
+    blueNebula.update(dt);
     blackHole.update(t);
     meteorFields.forEach((f) => f.update(dt));
 
@@ -1335,6 +1369,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     galaxy.dispose();
     lenticular.dispose();
     nebula.dispose();
+    blueNebula.dispose();
     blackHole.dispose();
     meteorFields.forEach((f) => f.dispose());
     renderer.dispose();
