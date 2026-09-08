@@ -1216,7 +1216,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   farScene.add(lenticular.object);
 
   const nebula = buildNebula({
-    position: [-52, 4, -150],
+    position: [-82, 4, -150],
     radius: 19,
     gasCount: 6000,
     starCount: 75,
