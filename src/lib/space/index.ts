@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026 Julio Cesar Martin
+ * SPDX-License-Identifier: MIT
+ */
+
 /* Spaceship-window space background -- framework-agnostic Three.js scene.
  *
  * A deep cloud of real 3D star particles streaming past a fixed camera, plus
