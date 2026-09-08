@@ -20,8 +20,16 @@ export function getPostTitle(markdown: string): string {
   return markdown.split('\n')[0].replace('#', '').trim();
 }
 
-/** First-paragraph heuristic — ported verbatim from the old Express helper. */
+/**
+ * Post description for `<meta>` / OG / feeds.
+ *
+ * An explicit `<!-- description: ... -->` comment anywhere in the markdown wins
+ * (author-controlled SEO snippet). Otherwise falls back to a first-paragraph
+ * heuristic — ported verbatim from the old Express helper.
+ */
 export function getPostDescription(markdown: string): string | null {
+  const explicit = markdown.match(/<!--\s*description:\s*([\s\S]*?)\s*-->/i);
+  if (explicit) return explicit[1].replace(/\s+/g, ' ').trim();
   try {
     const firstParagraphEndRegex = /[.]+[\s]/g;
     const end = markdown.search(firstParagraphEndRegex);

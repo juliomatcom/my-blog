@@ -11,40 +11,63 @@ import {
   getPostSlugs,
   getPostTitle,
 } from '@/lib/posts';
-import { SITE_AVATAR, SITE_URL } from '@/lib/site';
+import { SITE_AUTHOR, SITE_AVATAR, SITE_NAME, SITE_URL, TWITTER_HANDLE } from '@/lib/site';
 
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const file = path.join(BLOG_DIR, `${params.slug}.md`);
-  if (!fs.existsSync(file)) return {};
+interface PostSeo {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  published: string;
+}
+
+/** Shared SEO facts for a post — used by both `generateMetadata` and the JSON-LD. */
+function postSeo(slug: string): PostSeo | null {
+  const file = path.join(BLOG_DIR, `${slug}.md`);
+  if (!fs.existsSync(file)) return null;
   const markdown = fs.readFileSync(file, 'utf8');
   const title = getPostTitle(markdown);
-  const description = getPostDescription(markdown) ?? title;
   const rawImage = getPostImage(markdown) ?? SITE_AVATAR;
-  // Social scrapers need an absolute URL; post images are site-root relative.
-  const image = rawImage.startsWith('http') ? rawImage : `${SITE_URL}${rawImage}`;
-  const url = `${SITE_URL}/blog/${params.slug}/`;
+  return {
+    title,
+    description: getPostDescription(markdown) ?? title,
+    // Social scrapers need an absolute URL; post images are site-root relative.
+    image: rawImage.startsWith('http') ? rawImage : `${SITE_URL}${rawImage}`,
+    url: `${SITE_URL}/blog/${slug}/`,
+    published: getPostDate(slug).toISOString(),
+  };
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const seo = postSeo(params.slug);
+  if (!seo) return {};
 
   return {
-    title: `${title} | Julio Cesar Martin`,
-    description,
-    alternates: { canonical: url },
+    title: seo.title,
+    description: seo.description,
+    authors: [{ name: SITE_AUTHOR, url: SITE_URL }],
+    alternates: { canonical: seo.url },
     openGraph: {
       type: 'article',
-      url,
-      title,
-      description,
-      publishedTime: getPostDate(params.slug).toISOString(),
-      images: [image],
+      url: seo.url,
+      siteName: SITE_NAME,
+      title: seo.title,
+      description: seo.description,
+      publishedTime: seo.published,
+      authors: [SITE_AUTHOR],
+      images: [{ url: seo.image, alt: seo.title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
-      images: [image],
+      site: TWITTER_HANDLE,
+      creator: TWITTER_HANDLE,
+      title: seo.title,
+      description: seo.description,
+      images: [seo.image],
     },
   };
 }
@@ -52,6 +75,39 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   if (!getPostSlugs().includes(params.slug)) notFound();
   const post = await getPostBySlug(params.slug);
+  const seo = postSeo(params.slug)!;
 
-  return <div id="blog" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />;
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: seo.title,
+    description: seo.description,
+    image: seo.image,
+    datePublished: seo.published,
+    dateModified: seo.published,
+    author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
+    publisher: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': seo.url },
+    url: seo.url,
+    inLanguage: 'en',
+  };
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: seo.title, item: seo.url },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([articleLd, breadcrumbLd]) }}
+      />
+      <article id="blog" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+    </>
+  );
 }

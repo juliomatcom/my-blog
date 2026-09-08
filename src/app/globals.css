@@ -221,8 +221,57 @@ img.avatar {
   margin-bottom: 20px;
 }
 
+header .intro {
+  max-width: 80ch;
+  margin: 1rem auto 0;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.header-cols {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.header-avatar {
+  flex-shrink: 0;
+}
+
+.header-about {
+  max-width: 46ch;
+}
+
+.header-about h1 {
+  margin: 0 0 0.4rem;
+}
+
+.header-about .intro {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .header-cols {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.center h1,
+header h1 {
+  font-size: 1.6rem;
+  margin: 0.2rem 0 0;
+}
+
 /* Source: https://css-tricks.com/snippets/css/typewriter-effect/ */
 .typewriter {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 1.2rem 0 0.6rem;
   padding-right: 2px;
   border-right: 0.15em solid whitesmoke; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
@@ -263,6 +312,64 @@ img.avatar {
 /* WebGL canvas is opaque and covers the static fallback stars */
 body.space-active {
   background-image: none;
+}
+
+/* --- Zen mode: hide all page chrome, just watch the space ------------ */
+.zen-toggle {
+  position: fixed;
+  top: 0.85rem;
+  right: 0.9rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: whitesmoke;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0.5;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.zen-toggle:hover {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+nav,
+#content,
+#rss,
+footer {
+  transition: opacity 0.45s ease;
+}
+body.zen nav,
+body.zen #content,
+body.zen #rss,
+body.zen footer {
+  opacity: 0;
+  pointer-events: none;
+}
+body.zen .zen-toggle {
+  opacity: 0.28;
+}
+body.zen .zen-toggle:hover {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav,
+  #content,
+  #rss,
+  footer {
+    transition: none;
+  }
 }
 
 .starry {
