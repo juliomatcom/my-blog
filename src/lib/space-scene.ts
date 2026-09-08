@@ -1111,12 +1111,17 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   renderer.setPixelRatio(dpr);
   renderer.setClearColor(0x000000, 1);
 
+  // three depth-independent layers, composited back-to-front each frame:
+  //   farScene  -- stars, galaxies, nebula (deep background)
+  //   scene     -- planets, black hole (always drawn over the background)
+  //   overlay   -- meteoroids (always drawn over everything)
+  const farScene = new THREE.Scene();
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(CONFIG.fov, 1, 0.1, CONFIG.depth + 120);
 
   const stars = buildStarField();
   stars.setPixelRatio(dpr);
-  scene.add(stars.object);
+  farScene.add(stars.object);
 
   const planets = [
     buildPlanet({
@@ -1183,7 +1188,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     count: 2800,
     twist: 0.9,
     randomness: 0.22,
-    spin: 0.05,
+    spin: 0.015,
     tiltX: 1.15,
     tiltZ: -0.55,
     coreColor: '#ffe7c4',
@@ -1191,7 +1196,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     brightness: readingMode ? 0.72 : 1,
   });
   galaxy.setPixelRatio(dpr);
-  scene.add(galaxy.object);
+  farScene.add(galaxy.object);
 
   // lenticular galaxy low in the frame -- half the black hole's span, and
   // dimmer, so a post scrolling over it stays readable
@@ -1208,7 +1213,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     brightness: readingMode ? 0.68 : 1,
   });
   lenticular.setPixelRatio(dpr);
-  scene.add(lenticular.object);
+  farScene.add(lenticular.object);
 
   const nebula = buildNebula({
     position: [-104, 15, -150],
@@ -1226,7 +1231,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     ],
   });
   nebula.setPixelRatio(dpr);
-  scene.add(nebula.object);
+  farScene.add(nebula.object);
 
   // black hole down in the bottom-right (swapped with the spiral galaxy)
   const blackHole = buildBlackHole({
@@ -1256,9 +1261,6 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
       detail: 3,
     }),
   ];
-  // meteors live in a separate overlay scene, rendered after the main pass with
-  // a cleared depth buffer, so a rock always sits in front of the stars,
-  // planets, galaxies and black hole regardless of its actual distance
   const overlay = new THREE.Scene();
   meteorFields.forEach((f) => overlay.add(f.object));
 
@@ -1296,8 +1298,12 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     nebula.update(dt);
     blackHole.update(t);
     meteorFields.forEach((f) => f.update(dt));
-    renderer.render(scene, camera);
+
     renderer.autoClear = false;
+    renderer.clear();
+    renderer.render(farScene, camera);
+    renderer.clearDepth();
+    renderer.render(scene, camera);
     renderer.clearDepth();
     renderer.render(overlay, camera);
     renderer.autoClear = true;
