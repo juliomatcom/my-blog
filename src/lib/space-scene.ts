@@ -1078,15 +1078,19 @@ function createInput() {
  * On a machine without WebGL it no-ops (the CSS `.starry` fallback stays).
  */
 export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
-  const readingMode = !!document.getElementById('blog');
+  // `#blog` marks a rendered post. Its presence is re-checked every frame (the
+  // scene mounts once and outlives client-side navigation), so `atPost()` also
+  // tracks moving between the home page and a post without a reload.
+  const atPost = () => !!document.getElementById('blog');
+  const readingMode = atPost();
 
   // Blog posts are for reading -- keep the field sparse and calm so a long
-  // scroll over the moving background doesn't get distracting.
+  // scroll over the moving background doesn't get distracting. Star density is
+  // fixed here at build time; the pointer parallax is toggled live in the frame
+  // loop so it fades out on a post and back in on the home page.
   if (readingMode) {
     CONFIG.starCount = 2600;
     CONFIG.drift = 0.1;
-    CONFIG.camShift = 0.7;
-    CONFIG.lookShift = 7;
   } else {
     CONFIG.starCount = 7500;
     CONFIG.drift = 0.2;
@@ -1265,6 +1269,8 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   meteorFields.forEach((f) => overlay.add(f.object));
 
   const input = createInput();
+  // 1 on the home page, eased to 0 on a post -- scales the whole pointer parallax.
+  let parallax = readingMode ? 0 : 1;
 
   function resize() {
     const w = canvas.clientWidth;
@@ -1286,10 +1292,18 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
 
+    // In a blog post the cursor is for reading -- selecting text, chasing a link --
+    // so swinging the whole window along with it is distracting. Ease the parallax
+    // out to nothing on a post (camera locked forward) and back in on the home page.
+    parallax += ((atPost() ? 0 : 1) - parallax) * (1 - Math.exp(-4 * dt));
     input.update(dt, t);
-    camera.position.x = input.view.x * CONFIG.camShift;
-    camera.position.y = -input.view.y * CONFIG.camShift;
-    camera.lookAt(input.view.x * CONFIG.lookShift, -input.view.y * CONFIG.lookShift, -100);
+    camera.position.x = input.view.x * CONFIG.camShift * parallax;
+    camera.position.y = -input.view.y * CONFIG.camShift * parallax;
+    camera.lookAt(
+      input.view.x * CONFIG.lookShift * parallax,
+      -input.view.y * CONFIG.lookShift * parallax,
+      -100,
+    );
 
     stars.update(dt, t);
     planets.forEach((p) => p.update(dt));
