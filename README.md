@@ -31,3 +31,11 @@ GitHub Actions (`.github/workflows/deploy.yml`):
 
 One-time setup: repo **Settings → Pages → Source = GitHub Actions**, and point the
 `depre.net` DNS at GitHub Pages (`public/CNAME` already declares the domain).
+
+## License
+
+Dual-licensed — see [LICENSE](LICENSE):
+
+- **Source code** (`src/`, `scripts/`, config): MIT.
+- **Blog content** (`content/`, `public/images/`): © Julio Cesar Martin, all
+  rights reserved. Not licensed for reuse.

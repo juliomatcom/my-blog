@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "Julio Cesar Martin",
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
     "feed": "4.2.2",
     "next": "^14.2.35",

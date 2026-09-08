@@ -3,6 +3,9 @@ node_modules
 **/.DS_Store
 .history
 
+# Local tooling
+.claude/settings.local.json
+
 # Next.js
 /.next
 /out
