@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { initSpaceScene } from '@/lib/space-scene';
+import { initSpaceScene } from '@/lib/space';
 
 /**
  * Mounts the animated WebGL space background. All of the Three.js work lives in
- * `@/lib/space-scene`; this component only owns the <canvas> and its lifecycle.
+ * `@/lib/space`; this component only owns the <canvas> and its lifecycle.
  */
 export default function SpaceBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
