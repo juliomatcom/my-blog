@@ -1,8 +1,8 @@
 /* Spaceship-window space background -- framework-agnostic Three.js scene.
  *
  * A deep cloud of real 3D star particles streaming past a fixed camera, plus
- * procedurally-shaded alien planets, a spiral galaxy, a lenticular galaxy, a
- * nebula and a black hole. Pointer movement (or device tilt) slides and turns
+ * procedurally-shaded alien planets, a spiral galaxy, a lenticular galaxy, two
+ * nebulae and a black hole. Pointer movement (or device tilt) slides and turns
  * the camera a few degrees with eased inertia, so near stars sweep across the
  * view while far ones barely move -- the parallax of looking through a moving
  * ship's window.
@@ -1233,6 +1233,25 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   nebula.setPixelRatio(dpr);
   farScene.add(nebula.object);
 
+  // small blue bubble nebula floating just above the orange planet (64, 28, -145)
+  const blueNebula = buildNebula({
+    position: [58, 46, -150],
+    radius: 8,
+    gasCount: 2600,
+    starCount: 22,
+    spin: 0.006,
+    tilt: -0.25,
+    pointSize: 260,
+    clumps: [
+      { color: '#3f7fe0', offset: [0, 0, 0], scale: [1.0, 0.95, 0.8], spread: 1.0, weight: 0.4 },
+      { color: '#6ba8ff', offset: [-3, 2, 1], scale: [0.9, 0.8, 0.7], spread: 0.8, weight: 0.28 },
+      { color: '#2a5fb0', offset: [3, -2, -1], scale: [0.8, 0.9, 0.7], spread: 0.9, weight: 0.2 },
+      { color: '#a9d0ff', offset: [1, 3, 1], scale: [0.5, 0.45, 0.4], spread: 0.45, weight: 0.12 },
+    ],
+  });
+  blueNebula.setPixelRatio(dpr);
+  farScene.add(blueNebula.object);
+
   // black hole down in the bottom-right (swapped with the spiral galaxy)
   const blackHole = buildBlackHole({
     position: [90, -54, -172],
@@ -1296,6 +1315,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     galaxy.update(dt);
     lenticular.update(dt);
     nebula.update(dt);
+    blueNebula.update(dt);
     blackHole.update(t);
     meteorFields.forEach((f) => f.update(dt));
 
@@ -1335,6 +1355,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     galaxy.dispose();
     lenticular.dispose();
     nebula.dispose();
+    blueNebula.dispose();
     blackHole.dispose();
     meteorFields.forEach((f) => f.dispose());
     renderer.dispose();
