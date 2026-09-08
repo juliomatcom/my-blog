@@ -1,26 +1,41 @@
 # my blog
 
-[![Node.js CI](https://github.com/juliomatcom/my-blog/actions/workflows/node.js.yml/badge.svg)](https://github.com/juliomatcom/my-blog/actions/workflows/node.js.yml)
+[![CI / Deploy](https://github.com/juliomatcom/my-blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/juliomatcom/my-blog/actions/workflows/deploy.yml)
 
-## Setup
-- `git clone <repo>`
+Statically generated personal blog. Next.js (App Router) + TypeScript, exported to plain
+HTML and deployed to GitHub Pages at **depre.net**.
+
+## Writing
+
+Posts are markdown files in `content/blog/`. The filename is the URL slug and must contain
+the publish date: `my-post-title-YYYY-MM-DD.md`. The first line (`# Title`) is the post
+title. No frontmatter needed.
+
+Add or edit a `.md` file, push to `main`, and CI rebuilds and redeploys the static site.
+
+## Local development
+
 - `npm i`
-- `npm run dev` (need manual reloading of .md and .html)
-
-## Docker compose configuration
-```
-   my-blog:
-     image: "node:20"
-     user: "node"
-     working_dir: /home/node/app
-     environment:
-       - NODE_ENV=production
-     volumes:
-       - ${PWD}/my-blog:/home/node/app
-     ports:
-       - 3080:3080
-     command: bash -c "npm ci && npm start"
-```
+- `npm run dev` — dev server at http://localhost:3000 (hot reload for posts too)
+- `npm run build` — production build; static site is emitted to `out/`
+  (includes `feed/rss.xml`, `feed/atom.xml`, and redirect stubs for old URLs)
+- `npm test` — core tests (post parsing, feed generation)
+- `npm run lint` / `npm run format` — ESLint / Prettier
 
 ## Deployment
-Automatically handled with tailscale VPN and private ssh to ace server 
+
+GitHub Actions (`.github/workflows/deploy.yml`):
+
+1. On every push/PR to `main`: `lint`, `format:check`, `test`, `build` must pass.
+2. On `main` only: the `out/` directory is published to GitHub Pages.
+
+One-time setup: repo **Settings → Pages → Source = GitHub Actions**, and point the
+`depre.net` DNS at GitHub Pages (`public/CNAME` already declares the domain).
+
+## License
+
+Dual-licensed — see [LICENSE](LICENSE):
+
+- **Source code** (`src/`, `scripts/`, config): MIT.
+- **Blog content** (`content/`, `public/images/`): © Julio Cesar Martin, all
+  rights reserved. Not licensed for reuse.

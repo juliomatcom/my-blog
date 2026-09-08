@@ -1,3 +1,13 @@
 node_modules
 **/.DS_STORE
+**/.DS_Store
 .history
+
+# Local tooling
+.claude/settings.local.json
+
+# Next.js
+/.next
+/out
+next-env.d.ts
+*.tsbuildinfo

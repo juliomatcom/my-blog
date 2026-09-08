@@ -1,18 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* you should definitively not trust my css skills */
 body {
   margin: 0px;
   background-color: black;
   color: whitesmoke;
-  font-family: "Dosis", serif;
+  font-family: var(--font-dosis), 'Dosis', serif;
   font-size: 1.2rem;
   line-height: 1.3;
   letter-spacing: 0.7px;
   min-width: 375px;
+  /* keep the footer on the bottom edge on short pages, without pinning it */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
 }
 ::-moz-selection {
   /* Code for Firefox */
   color: pink;
-  background: ##252525;
+  background: #252525;
 }
 
 ::selection {
@@ -103,7 +115,7 @@ code {
 }
 
 #blog pre code {
-  font-family: "Fira Code", monospace;
+  font-family: 'Fira Code', monospace;
   display: block;
   overflow-x: auto;
   padding: 1em;
@@ -123,7 +135,76 @@ footer {
   text-align: center;
 }
 
-img[alt="homelab"] {
+/* quick client-side page transition: fade out on click, fade in on arrival */
+.page-fade {
+  animation: page-fade-in 0.2s ease both;
+}
+.page-fade.is-leaving {
+  animation: page-fade-out 0.12s ease forwards;
+}
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+/* --- comet loader: first-load preloader only ---------------------- */
+.comet {
+  position: absolute;
+  top: 44%;
+  left: -240px;
+  width: 240px;
+  height: 14px;
+  border-radius: 7px;
+  will-change: transform;
+  /* one element: a round warm-white head + a streak tapering behind it */
+  background: radial-gradient(
+      12px 12px at calc(100% - 9px) 50%,
+      #fff 0%,
+      rgba(255, 236, 176, 0.85) 42%,
+      rgba(255, 214, 120, 0) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(255, 210, 120, 0) 0%,
+      rgba(255, 224, 150, 0.16) 62%,
+      rgba(255, 240, 200, 0.68) 90%,
+      rgba(255, 250, 235, 0.95) 100%
+    );
+  background-repeat: no-repeat;
+  animation: comet-run 2.8s linear infinite;
+}
+@keyframes comet-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 260px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade,
+  .page-fade.is-leaving {
+    animation: none;
+  }
+  .comet {
+    animation-duration: 5s;
+  }
+}
+
+img[alt='homelab'] {
   border-radius: 2rem;
 }
 
@@ -175,8 +256,7 @@ img.avatar {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%),
+  background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%),
     linear-gradient(135deg, rgba(180, 210, 255, 0.05), rgba(0, 0, 0, 0) 40%);
 }
 
@@ -186,11 +266,7 @@ body.space-active {
 }
 
 .starry {
-  background-image: radial-gradient(
-      #c0e5fd,
-      rgba(105, 188, 243, 0.2) 3px,
-      transparent 20px
-    ),
+  background-image: radial-gradient(#c0e5fd, rgba(105, 188, 243, 0.2) 3px, transparent 20px),
     radial-gradient(#ff9050, rgba(255, 150, 150, 0.5) 2px 1px, transparent 15px),
     radial-gradient(#fff8e4, rgba(255, 248, 228, 0.3) 2px, transparent 4px),
     radial-gradient(#4e493d, rgba(255, 255, 255, 0.1) 2px, transparent 8px),
