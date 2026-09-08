@@ -897,10 +897,14 @@ interface MeteorFieldOpts {
 }
 
 function buildMeteorField(opts: MeteorFieldOpts) {
-  const BACK = 250; // spawn depth
-  const NEAR = 3; // respawn once it drifts past the camera
-  const FADE_IN = 60; // fade up over the first stretch after spawn
-  const FADE_OUT = 34; // fade down over the last stretch before the camera
+  const BACK = 220; // spawn depth
+  const NEAR = 4; // respawn once it drifts past the camera
+  const FADE_IN = 36; // fade up over the first stretch after spawn
+  const FADE_OUT = 40; // fade down over the last stretch before the camera
+  // rough half-extent of the view at the distance where a rock frames well;
+  // x/y offsets are anchored to this so every rock actually crosses the cone
+  const FRAME_W = 52;
+  const FRAME_H = 34;
   const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
   const rng = (a: number, b: number) => a + Math.random() * (b - a);
   const randDir = () => {
@@ -940,8 +944,8 @@ function buildMeteorField(opts: MeteorFieldOpts) {
       depthWrite: false,
       uniforms: {
         uLightDir: { value: new THREE.Vector3(-0.55, 0.4, 0.6).normalize() },
-        uColor: { value: new THREE.Color('#4a423a') },
-        uRim: { value: new THREE.Color('#2b3550') },
+        uColor: { value: new THREE.Color('#8a7d6d') },
+        uRim: { value: new THREE.Color('#4a5a80') },
         uBright: { value: opts.brightness },
         uOpacity: { value: 0 },
       },
@@ -967,9 +971,9 @@ function buildMeteorField(opts: MeteorFieldOpts) {
         void main () {
           vec3 n = normalize(vN);
           float diff = clamp(dot(n, uLightDir), 0.0, 1.0);
-          vec3 col = uColor * (0.05 + 0.95 * diff) * uBright;
-          float fres = pow(1.0 - clamp(dot(n, vView), 0.0, 1.0), 2.5);
-          col += uRim * fres * 0.6; // faint cool rim so the silhouette reads on black
+          vec3 col = uColor * (0.18 + 0.9 * diff) * uBright;
+          float fres = pow(1.0 - clamp(dot(n, vView), 0.0, 1.0), 2.2);
+          col += uRim * fres * 0.9; // cool rim so the silhouette reads on black
           gl_FragColor = vec4(col, uOpacity);
         }
       `,
@@ -986,13 +990,13 @@ function buildMeteorField(opts: MeteorFieldOpts) {
 
   const respawn = (r: Rock, first: boolean) => {
     const m = r.mesh;
-    m.position.z = first ? rng(-BACK, -20) : rng(-BACK, -BACK * 0.75);
-    // bias out toward the frame edges -> keep the centre reading column clear
-    const reachX = Math.abs(m.position.z) * 0.9 + 20;
-    const reachY = Math.abs(m.position.z) * 0.5 + 12;
-    m.position.x = (Math.random() < 0.5 ? -1 : 1) * rng(0.42, 1.25) * reachX;
-    m.position.y = (Math.random() < 0.5 ? -1 : 1) * rng(0.3, 1.0) * reachY;
-    m.scale.setScalar(rng(0.4, 1.3));
+    // first batch starts already near the visible band so rocks show up fast
+    m.position.z = first ? rng(-120, -30) : rng(-BACK, -BACK * 0.78);
+    // offsets anchored to the view frame (not to spawn depth): off-centre so the
+    // reading column stays clear, but close enough that the rock crosses the cone
+    m.position.x = (Math.random() < 0.5 ? -1 : 1) * rng(0.3, 0.95) * FRAME_W;
+    m.position.y = (Math.random() < 0.5 ? -1 : 1) * rng(0.14, 0.78) * FRAME_H;
+    m.scale.setScalar(rng(0.7, 2.3));
     m.rotation.set(Math.random() * 6.28, Math.random() * 6.28, Math.random() * 6.28);
     r.spin.copy(randDir()).multiplyScalar(rng(0.05, 0.5));
     r.speed = opts.speed * rng(0.85, 1.6);
@@ -1242,9 +1246,9 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   scene.add(blackHole.object);
 
   const meteors = buildMeteorField({
-    count: readingMode ? 3 : 6,
-    speed: readingMode ? 3 : 5,
-    brightness: readingMode ? 0.55 : 0.9,
+    count: readingMode ? 4 : 8,
+    speed: readingMode ? 3 : 4.5,
+    brightness: readingMode ? 0.7 : 1,
   });
   scene.add(meteors.object);
 
