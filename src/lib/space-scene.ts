@@ -1216,7 +1216,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   farScene.add(lenticular.object);
 
   const nebula = buildNebula({
-    position: [-104, 15, -150],
+    position: [-72, 4, -150],
     radius: 19,
     gasCount: 6000,
     starCount: 75,
@@ -1233,9 +1233,9 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   nebula.setPixelRatio(dpr);
   farScene.add(nebula.object);
 
-  // small blue bubble nebula floating just above the orange planet (64, 28, -145)
+  // small blue bubble nebula floating above the orange planet (64, 28, -145)
   const blueNebula = buildNebula({
-    position: [58, 46, -150],
+    position: [34, 34, -150],
     radius: 8,
     gasCount: 2600,
     starCount: 22,
