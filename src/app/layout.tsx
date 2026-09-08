@@ -6,6 +6,7 @@ import Preloader from '@/components/Preloader';
 import PageTransition from '@/components/PageTransition';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import ZenToggle from '@/components/ZenToggle';
 import {
   SITE_AUTHOR,
   SITE_AVATAR,
@@ -119,12 +120,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Preloader />
         <SpaceBackground />
         <div className="viewport-glass" aria-hidden="true" />
+        <ZenToggle />
         <Nav />
 
         <main>
           <div id="content">
             <PageTransition>{children}</PageTransition>
           </div>
+          {/* RSS/Atom badges hidden for now — feeds are still generated and
+              linked from <head> via metadata.alternates.
           <div id="rss">
             <a href="/feed/rss.xml">
               <img src="/images/valid-rss-rogers.png" alt="RSS feed" title="Follow my RSS feed" />
@@ -133,6 +137,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <img src="/images/valid-atom.png" alt="Atom feed" title="Follow my Atom feed" />
             </a>
           </div>
+          */}
         </main>
 
         <Footer />
