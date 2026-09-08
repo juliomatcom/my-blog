@@ -26,6 +26,20 @@ export const metadata: Metadata = {
     icon: AVATAR,
     shortcut: AVATAR,
   },
+  openGraph: {
+    type: 'website',
+    url: 'https://depre.net',
+    siteName: 'depre.net',
+    title: 'Julio Cesar Martin - Software Engineer',
+    description: 'Julio Cesar Martin - Software Engineer',
+    images: [AVATAR],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Julio Cesar Martin - Software Engineer',
+    description: 'Julio Cesar Martin - Software Engineer',
+    images: [AVATAR],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

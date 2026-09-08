@@ -33,6 +33,12 @@ export function getPostDescription(markdown: string): string | null {
   }
 }
 
+/** First image referenced in the markdown (`![alt](url)`), or `null`. */
+export function getPostImage(markdown: string): string | null {
+  const match = markdown.match(/!\[[^\]]*\]\(([^)\s]+)/);
+  return match ? match[1] : null;
+}
+
 /** Parse the `YYYY-MM-DD` embedded in a slug or filename. */
 export function getPostDate(slugOrFilename: string): Date {
   const match = slugOrFilename.match(/(\d{4}-\d{2}-\d{2})/);

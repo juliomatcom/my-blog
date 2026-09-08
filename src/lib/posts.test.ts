@@ -1,4 +1,11 @@
-import { getAllPosts, getPostDate, getPostDescription, getPostSlugs, getPostTitle } from './posts';
+import {
+  getAllPosts,
+  getPostDate,
+  getPostDescription,
+  getPostImage,
+  getPostSlugs,
+  getPostTitle,
+} from './posts';
 
 describe('post metadata helpers', () => {
   it('strips the leading # from the first line for the title', () => {
@@ -18,6 +25,13 @@ describe('post metadata helpers', () => {
   it('returns the first paragraph as a description', () => {
     const md = '# Title\n\nFirst sentence here. Second sentence.';
     expect(getPostDescription(md)).toBe('First sentence here...');
+  });
+
+  it('extracts the first markdown image url', () => {
+    expect(getPostImage('# Title\n\n![machine](/images/machine.jpeg)\n\nbody')).toBe(
+      '/images/machine.jpeg',
+    );
+    expect(getPostImage('# Title\n\nno images here')).toBeNull();
   });
 });
 
