@@ -45,6 +45,7 @@ The feature I didn't expect to love.
 
 *The blind rounds, the moderator's limits, and why it never votes: [baya-cli.depre.net/ai-consensus](https://baya-cli.depre.net/ai-consensus/).*
 
+## Next
 Where it goes next: more providers, because people use more than four CLIs. Smarter cost routing, spending the expensive tokens only where they change the outcome. And getting more people on board, the hardest part by far. Most developers just use whatever provider their company hands them and never think about it. The ones who pay their own way, like me, are the ones who actually feel the bill and the ceiling of a single subscription. That's who Baya is for, and there aren't many of us yet. But the ones who try it keep it.
 
 *Why Baya sits alongside your CLIs and what it does for your bill: [the FAQ](https://baya-cli.depre.net/faq/).*

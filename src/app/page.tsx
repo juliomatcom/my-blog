@@ -27,22 +27,28 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }}
       />
-      <header className="center">
-        <a title="Go to my GitHub page" href="https://github.com/juliomatcom" target="_blank">
-          <img src="/images/icons8-github-30a.png" alt="GitHub" className="github-icon" />
-          <img src={SITE_AVATAR} alt={`${SITE_AUTHOR} profile photo`} className="avatar" />
-        </a>
-        <h1>{SITE_AUTHOR}</h1>
-        <p>
-          <code>Software Engineer • Creator &amp; OSS Maintainer 🚀</code>
-        </p>
-        <p className="intro">
-          I am a software engineer, creator, and open-source maintainer. I build and ship my own
-          products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and trading
-          platform, and <a href="https://baya-cli.depre.net/">Baya</a>, a local multi-provider AI
-          CLI orchestrator. On this blog I write about software architecture, clean code,
-          AI-assisted development, and self-hosting.
-        </p>
+      <header>
+        <div className="header-cols">
+          <a
+            className="header-avatar"
+            title="Go to my GitHub page"
+            href="https://github.com/juliomatcom"
+            target="_blank"
+          >
+            <img src="/images/icons8-github-30a.png" alt="GitHub" className="github-icon" />
+            <img src={SITE_AVATAR} alt={`${SITE_AUTHOR} profile photo`} className="avatar" />
+          </a>
+          <div className="header-about">
+            <h1>{SITE_AUTHOR}</h1>
+            <p className="intro">
+              I am a software engineer, creator, and open-source maintainer. I build and ship my own
+              products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and trading
+              platform, and <a href="https://baya-cli.depre.net/">Baya</a>, a local multi-provider
+              AI CLI orchestrator. On this blog I write about software architecture, clean code,
+              AI-assisted development, and self-hosting.
+            </p>
+          </div>
+        </div>
       </header>
       <h2 className="typewriter">My blog</h2>
       <ul className="posts">

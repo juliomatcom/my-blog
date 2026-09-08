@@ -228,6 +228,38 @@ header .intro {
   opacity: 0.92;
 }
 
+.header-cols {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.header-avatar {
+  flex-shrink: 0;
+}
+
+.header-about {
+  max-width: 46ch;
+}
+
+.header-about h1 {
+  margin: 0 0 0.4rem;
+}
+
+.header-about .intro {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .header-cols {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 .center h1,
 header h1 {
   font-size: 1.6rem;
