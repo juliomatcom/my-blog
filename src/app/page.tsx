@@ -37,10 +37,11 @@ export default function HomePage() {
           <code>Software Engineer • Creator &amp; OSS Maintainer 🚀</code>
         </p>
         <p className="intro">
-          I&apos;m a software engineer and open-source maintainer. I build developer tools — like{' '}
-          <a href="https://baya-cli.depre.net/">Baya</a>, a local multi-provider AI CLI orchestrator
-          — and write about software architecture, clean code, AI-assisted development, and
-          self-hosting.
+          I am a software engineer, creator, and open-source maintainer. I build and ship my own
+          products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and trading
+          platform, and <a href="https://baya-cli.depre.net/">Baya</a>, a local multi-provider AI
+          CLI orchestrator. On this blog I write about software architecture, clean code,
+          AI-assisted development, and self-hosting.
         </p>
       </header>
       <h2 className="typewriter">My blog</h2>

@@ -10,7 +10,7 @@ export const SITE_TITLE = 'Julio Cesar Martin — Software Engineer, Creator & O
 
 /** Default meta description (home + fallback). Keep it under ~160 chars. */
 export const SITE_DESCRIPTION =
-  'Julio Cesar Martin is a software engineer and open-source maintainer. Essays on software architecture, clean code, developer tooling, AI-assisted development, and self-hosting.';
+  'Julio Cesar Martin, software engineer and creator of products like TapeBull and Baya. Essays on software architecture, clean code, AI-assisted development, and self-hosting.';
 
 export const TWITTER_HANDLE = '@depre_cuba';
 

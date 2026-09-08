@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="center">
-      <h1>404 — page not found</h1>
+      <h1>Page not found</h1>
       <p>That page moved or never existed.</p>
       <p>
-        <TransitionLink href="/">← Back to the blog</TransitionLink>
+        <TransitionLink href="/">Back to the blog</TransitionLink>
       </p>
     </div>
   );
