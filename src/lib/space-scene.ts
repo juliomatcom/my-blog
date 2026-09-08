@@ -884,6 +884,154 @@ function buildBlackHole(opts: BlackHoleOpts) {
   };
 }
 
+// --- Meteoroids ----------------------------------------------------------
+// A few irregular rocks drifting toward the camera along the same axis as the
+// star stream. Kept sparse, small, and biased out toward the frame edges so
+// text sitting over the background stays readable.
+
+interface MeteorFieldOpts {
+  count: number;
+  /** travel toward the camera (units/sec), roughly the star drift */
+  speed: number;
+  brightness: number;
+}
+
+function buildMeteorField(opts: MeteorFieldOpts) {
+  const BACK = 250; // spawn depth
+  const NEAR = 3; // respawn once it drifts past the camera
+  const FADE_IN = 60; // fade up over the first stretch after spawn
+  const FADE_OUT = 34; // fade down over the last stretch before the camera
+  const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+  const rng = (a: number, b: number) => a + Math.random() * (b - a);
+  const randDir = () => {
+    const u = Math.random() * 2 - 1;
+    const t = Math.random() * Math.PI * 2;
+    const s = Math.sqrt(1 - u * u);
+    return new THREE.Vector3(s * Math.cos(t), s * Math.sin(t), u);
+  };
+
+  // an irregular low-poly rock: an icosahedron pushed around by a handful of
+  // smooth radial lumps, so no two come out the same shape
+  const makeRock = () => {
+    const geo = new THREE.IcosahedronGeometry(1, 2);
+    const lumps = Array.from({ length: 7 }, () => ({
+      dir: randDir(),
+      amp: rng(-0.34, 0.42),
+      sharp: rng(1.2, 3.5),
+    }));
+    const pos = geo.attributes.position as THREE.BufferAttribute;
+    const v = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+      v.fromBufferAttribute(pos, i).normalize();
+      let d = 1;
+      for (const l of lumps) d += l.amp * Math.pow(Math.max(0, v.dot(l.dir)), l.sharp);
+      v.multiplyScalar(Math.max(0.45, d));
+      pos.setXYZ(i, v.x, v.y, v.z);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  };
+
+  // one material per rock: they carry their own fade opacity as they stream in
+  // at the back and out past the camera, so nothing pops in or out
+  const makeMaterial = () =>
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      uniforms: {
+        uLightDir: { value: new THREE.Vector3(-0.55, 0.4, 0.6).normalize() },
+        uColor: { value: new THREE.Color('#4a423a') },
+        uRim: { value: new THREE.Color('#2b3550') },
+        uBright: { value: opts.brightness },
+        uOpacity: { value: 0 },
+      },
+      vertexShader: `
+        varying vec3 vN;
+        varying vec3 vView;
+        void main () {
+          vN = normalize(mat3(modelMatrix) * normal);
+          vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
+          vView = normalize(cameraPosition - wp);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        precision mediump float;
+        uniform vec3 uLightDir;
+        uniform vec3 uColor;
+        uniform vec3 uRim;
+        uniform float uBright;
+        uniform float uOpacity;
+        varying vec3 vN;
+        varying vec3 vView;
+        void main () {
+          vec3 n = normalize(vN);
+          float diff = clamp(dot(n, uLightDir), 0.0, 1.0);
+          vec3 col = uColor * (0.05 + 0.95 * diff) * uBright;
+          float fres = pow(1.0 - clamp(dot(n, vView), 0.0, 1.0), 2.5);
+          col += uRim * fres * 0.6; // faint cool rim so the silhouette reads on black
+          gl_FragColor = vec4(col, uOpacity);
+        }
+      `,
+    });
+
+  interface Rock {
+    mesh: THREE.Mesh;
+    material: THREE.ShaderMaterial;
+    spin: THREE.Vector3;
+    speed: number;
+  }
+  const group = new THREE.Group();
+  const rocks: Rock[] = [];
+
+  const respawn = (r: Rock, first: boolean) => {
+    const m = r.mesh;
+    m.position.z = first ? rng(-BACK, -20) : rng(-BACK, -BACK * 0.75);
+    // bias out toward the frame edges -> keep the centre reading column clear
+    const reachX = Math.abs(m.position.z) * 0.9 + 20;
+    const reachY = Math.abs(m.position.z) * 0.5 + 12;
+    m.position.x = (Math.random() < 0.5 ? -1 : 1) * rng(0.42, 1.25) * reachX;
+    m.position.y = (Math.random() < 0.5 ? -1 : 1) * rng(0.3, 1.0) * reachY;
+    m.scale.setScalar(rng(0.4, 1.3));
+    m.rotation.set(Math.random() * 6.28, Math.random() * 6.28, Math.random() * 6.28);
+    r.spin.copy(randDir()).multiplyScalar(rng(0.05, 0.5));
+    r.speed = opts.speed * rng(0.85, 1.6);
+  };
+
+  for (let i = 0; i < opts.count; i++) {
+    const material = makeMaterial();
+    const mesh = new THREE.Mesh(makeRock(), material);
+    mesh.frustumCulled = false;
+    const rock: Rock = { mesh, material, spin: new THREE.Vector3(), speed: 0 };
+    respawn(rock, true);
+    rocks.push(rock);
+    group.add(mesh);
+  }
+
+  return {
+    object: group,
+    update(dt: number) {
+      for (const r of rocks) {
+        const p = r.mesh.position;
+        p.z += r.speed * dt;
+        r.mesh.rotation.x += r.spin.x * dt;
+        r.mesh.rotation.y += r.spin.y * dt;
+        r.mesh.rotation.z += r.spin.z * dt;
+        if (p.z > NEAR) respawn(r, false);
+        const fadeIn = clamp01((p.z + BACK) / FADE_IN);
+        const fadeOut = clamp01((NEAR - p.z) / FADE_OUT);
+        r.material.uniforms.uOpacity.value = Math.min(fadeIn, fadeOut);
+      }
+    },
+    dispose() {
+      for (const r of rocks) {
+        r.mesh.geometry.dispose();
+        r.material.dispose();
+      }
+    },
+  };
+}
+
 // --- Input: pointer / device tilt -> eased offset [-1, 1] ----------------
 
 function createInput() {
@@ -1093,6 +1241,13 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   });
   scene.add(blackHole.object);
 
+  const meteors = buildMeteorField({
+    count: readingMode ? 3 : 6,
+    speed: readingMode ? 3 : 5,
+    brightness: readingMode ? 0.55 : 0.9,
+  });
+  scene.add(meteors.object);
+
   const input = createInput();
 
   function resize() {
@@ -1126,6 +1281,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     lenticular.update(dt);
     nebula.update(dt);
     blackHole.update(t);
+    meteors.update(dt);
     renderer.render(scene, camera);
     rafId = window.requestAnimationFrame(frame);
   }
@@ -1156,6 +1312,7 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
     lenticular.dispose();
     nebula.dispose();
     blackHole.dispose();
+    meteors.dispose();
     renderer.dispose();
     document.body.classList.remove('space-active');
   };
