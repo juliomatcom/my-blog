@@ -300,6 +300,45 @@ header h1 {
   background: #000;
 }
 
+/* FPS read-out -- sticky top-left, appears once the scene is running.
+   Colour tracks health: red < 20, yellow < 30, green at 30+. */
+#fps {
+  position: fixed;
+  top: 0.85rem;
+  left: 0.9rem;
+  z-index: 3;
+  padding: 0.25rem 0.55rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #7ee787;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  transition:
+    color 0.3s ease,
+    opacity 0.45s ease;
+}
+#fps span {
+  opacity: 0.55;
+  font-size: 0.85em;
+}
+#fps[data-tier='mid'] {
+  color: #f2cc60;
+}
+#fps[data-tier='low'] {
+  color: #ff7b72;
+}
+body.zen #fps {
+  opacity: 0;
+}
+
 .viewport-glass {
   position: fixed;
   inset: 0;
