@@ -39,13 +39,13 @@ export default function HomePage() {
             <img src={SITE_AVATAR} alt={`${SITE_AUTHOR} profile photo`} className="avatar" />
           </a>
           <div className="header-about">
-            <h1>{SITE_AUTHOR}</h1>
+            <h1>🧑🏾‍🚀 {SITE_AUTHOR}</h1>
             <p className="intro">
-              I am a software engineer, creator, and open-source maintainer. I build and ship my own
-              products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and trading
-              platform, and <a href="https://baya-cli.depre.net/">Baya</a>, a local multi-provider
-              AI CLI orchestrator. On this blog I write about software architecture, clean code,
-              AI-assisted development, and self-hosting.
+              Hello, I am a software engineer, creator, and open-source maintainer. I build and ship
+              my own products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and
+              trading platform, and <a href="https://baya-cli.depre.net/">Baya CLI</a>, a local
+              multi-provider AI CLI orchestrator. On this blog I write about software, AI, clean
+              code, self-hosting, and more. Oh, and I love space exploration 🚀.
             </p>
           </div>
         </div>
