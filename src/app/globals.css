@@ -159,38 +159,105 @@ footer {
   }
 }
 
-/* --- comet loader: first-load preloader only ---------------------- */
+/* --- comet loader: first-load preloader only ----------------------
+ * One moving element (`.comet`) carrying the head + tail streak, plus two
+ * pseudo-elements for polish: `::before` is a soft bloom behind the head,
+ * `::after` is a ring of debris tumbling around it. All three ride the same
+ * GPU-composited translateX; the debris only rotates. No JS, no box-shadow
+ * animation, no extra DOM -- the cost is one more layer, not one more frame.
+ */
 .comet {
   position: absolute;
   top: 44%;
-  left: -240px;
-  width: 240px;
+  left: -260px;
+  width: 260px;
   height: 14px;
   border-radius: 7px;
   will-change: transform;
-  /* one element: a round warm-white head + a streak tapering behind it */
+  /* a tight white core fading to warm gold + a streak tapering behind it */
   background: radial-gradient(
-      12px 12px at calc(100% - 9px) 50%,
+      circle 7px at calc(100% - 10px) 50%,
       #fff 0%,
-      rgba(255, 236, 176, 0.85) 42%,
+      #fff 26%,
+      rgba(255, 240, 198, 0.9) 52%,
       rgba(255, 214, 120, 0) 100%
     ),
     linear-gradient(
       to right,
       rgba(255, 210, 120, 0) 0%,
-      rgba(255, 224, 150, 0.16) 62%,
-      rgba(255, 240, 200, 0.68) 90%,
-      rgba(255, 250, 235, 0.95) 100%
+      rgba(255, 224, 150, 0.12) 55%,
+      rgba(255, 238, 196, 0.55) 86%,
+      rgba(255, 250, 236, 0.92) 100%
     );
   background-repeat: no-repeat;
   animation: comet-run 2.8s linear infinite;
+}
+/* bloom: a wide, faint halo centred on the head, painted once */
+.comet::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 56px;
+  height: 56px;
+  transform: translate(28%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 234, 180, 0.4) 0%,
+    rgba(255, 226, 160, 0.14) 42%,
+    rgba(255, 226, 160, 0) 72%
+  );
+}
+/* debris: a handful of chunks drawn as one layered gradient so it is a
+ * single paint; a slow rotation around the head sells the tumble */
+.comet::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  width: 40px;
+  height: 40px;
+  transform: translate(35%, -50%);
+  background: radial-gradient(1.6px 1.6px at 22% 32%, #fff 0%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(
+      2.2px 2.2px at 74% 20%,
+      rgba(255, 238, 190, 0.95) 0%,
+      rgba(255, 238, 190, 0) 100%
+    ),
+    radial-gradient(
+      1.2px 1.2px at 58% 72%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      1.8px 1.8px at 34% 84%,
+      rgba(255, 222, 150, 0.85) 0%,
+      rgba(255, 222, 150, 0) 100%
+    ),
+    radial-gradient(1px 1px at 88% 58%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(
+      1.4px 1.4px at 12% 60%,
+      rgba(255, 240, 200, 0.8) 0%,
+      rgba(255, 240, 200, 0) 100%
+    );
+  background-repeat: no-repeat;
+  will-change: transform;
+  animation: comet-debris 2.1s linear infinite;
 }
 @keyframes comet-run {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(calc(100vw + 260px));
+    transform: translateX(calc(100vw + 280px));
+  }
+}
+@keyframes comet-debris {
+  from {
+    transform: translate(35%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(35%, -50%) rotate(360deg);
   }
 }
 
@@ -201,6 +268,9 @@ footer {
   }
   .comet {
     animation-duration: 5s;
+  }
+  .comet::after {
+    animation: none;
   }
 }
 
@@ -298,6 +368,45 @@ header h1 {
   display: block;
   z-index: -2;
   background: #000;
+}
+
+/* FPS read-out -- sticky top-left, appears once the scene is running.
+   Colour tracks health: red < 20, yellow < 30, green at 30+. */
+#fps {
+  position: fixed;
+  top: 0.85rem;
+  left: 0.9rem;
+  z-index: 3;
+  padding: 0.25rem 0.55rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #7ee787;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  transition:
+    color 0.3s ease,
+    opacity 0.45s ease;
+}
+#fps span {
+  opacity: 0.55;
+  font-size: 0.85em;
+}
+#fps[data-tier='mid'] {
+  color: #f2cc60;
+}
+#fps[data-tier='low'] {
+  color: #ff7b72;
+}
+body.zen #fps {
+  opacity: 0;
 }
 
 .viewport-glass {

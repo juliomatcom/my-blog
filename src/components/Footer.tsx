@@ -16,7 +16,7 @@ export default function Footer() {
       <p>
         {year !== null ? (
           <a href="https://x.com/depre_cuba" target="_blank" rel="noopener noreferrer">
-            {`With 💚 by Julio César Martín - ${year}`}
+            {`© Julio César Martín Cabrera - ${year}`}
           </a>
         ) : (
           ''

@@ -20,6 +20,7 @@
  * Ported from the original public/space.js.
  */
 import * as THREE from 'three';
+import { createFpsMeter } from '../fps';
 import { CONFIG } from './config';
 import { createInput } from './input';
 import type { SceneBody } from './types';
@@ -36,7 +37,19 @@ import { buildMeteorField } from './bodies/meteor-field';
  * Returns a cleanup function that stops the loop and frees GPU resources.
  * On a machine without WebGL it no-ops (the CSS `.starry` fallback stays).
  */
-export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
+export interface SpaceSceneOptions {
+  /**
+   * Called a few times a second with the smoothed frame rate of the render
+   * loop. The scene stays agnostic about where that number goes -- the React
+   * side turns it into the on-screen counter.
+   */
+  onFps?: (fps: number) => void;
+}
+
+export function initSpaceScene(
+  canvas: HTMLCanvasElement,
+  options: SpaceSceneOptions = {},
+): () => void {
   // `#blog` marks a rendered post. Its presence is re-checked every frame (the
   // scene mounts once and outlives client-side navigation), so `atPost()` also
   // tracks moving between the home page and a post without a reload.
@@ -98,12 +111,17 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
+  // Off by default; the caller opts in by passing `onFps`. Measurement is
+  // allocation-free per frame, display is throttled to 3 Hz inside the meter.
+  const fpsMeter = options.onFps ? createFpsMeter({ onSample: options.onFps }) : null;
+
   let running = false;
   let last = 0;
   let rafId = 0;
 
   function frame(now: number) {
     if (!running) return;
+    fpsMeter?.tick(now);
     const t = now / 1000;
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
@@ -142,7 +160,10 @@ export function initSpaceScene(canvas: HTMLCanvasElement): () => void {
 
   const onVisibility = () => {
     if (document.hidden) running = false;
-    else start();
+    else {
+      fpsMeter?.reset(); // the tab was frozen -- don't average across the gap
+      start();
+    }
   };
   document.addEventListener('visibilitychange', onVisibility);
   start();
