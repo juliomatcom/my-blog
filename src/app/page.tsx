@@ -43,8 +43,8 @@ export default function HomePage() {
             <p className="intro">
               Hello, I am a software engineer and open-source maintainer. I build and ship
               independent apps and tools under <a href="https://dephelion.com/">Dephelion</a>. On
-              this blog, I write about software, AI, self-hosting, OSS, and more.
-              Let&apos;s build 🚀.
+              this blog, I write about software, AI, self-hosting, OSS, and more. Let&apos;s build
+              🚀.
             </p>
           </div>
         </div>
