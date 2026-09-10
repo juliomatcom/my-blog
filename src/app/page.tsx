@@ -41,11 +41,10 @@ export default function HomePage() {
           <div className="header-about">
             <h1>🧑🏾‍🚀 {SITE_AUTHOR}</h1>
             <p className="intro">
-              Hello, I am a software engineer, creator, and open-source maintainer. I build and ship
-              my own products, such as <a href="https://tapebull.com/">TapeBull</a>, a charting and
-              trading platform, and <a href="https://baya-cli.depre.net/">Baya CLI</a>, a local
-              multi-provider AI CLI orchestrator. On this blog I write about software, AI, clean
-              code, self-hosting, and more. Oh, and I love space exploration 🚀.
+              Hello, I am a software engineer and open-source maintainer. I build and ship
+              independent apps and tools under <a href="https://dephelion.com/">Dephelion</a>. On
+              this blog, I write about software, AI, self-hosting, OSS, and more. Let&apos;s build
+              🚀.
             </p>
           </div>
         </div>
